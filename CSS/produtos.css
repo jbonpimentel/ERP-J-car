@@ -1,7 +1,7 @@
 body {
   background: #f3f4f6;
-  
-   background-size: cover;
+
+  background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   background-attachment: fixed;
@@ -17,9 +17,11 @@ body {
   font-family: arial;
   border-left: solid 1px darkgray;
 }
+
 .table tr {
   height: 80px;
 }
+
 .table td,
 .table th {
   vertical-align: middle;
@@ -36,9 +38,11 @@ body {
 }
 
 .itens th {
-  background: transparent; /* 🔥 evita camada dupla */
+  background: transparent;
+  /* 🔥 evita camada dupla */
   color: #cfcfcf;
 }
+
 .i1 {
   text-align: center;
 }
@@ -61,9 +65,11 @@ td {
   color: #111827;
   font-variant-numeric: tabular-nums;
 }
+
 .v1 {
   text-align: center;
 }
+
 /* R$ separado */
 .valor::before {
   content: "R$ ";
@@ -73,7 +79,7 @@ td {
 
 /* Botao de voltar */
 
-.botao-voltar{
+.botao-voltar {
   display: inline-block;
   background: #2563eb;
   color: #fff;
@@ -82,7 +88,8 @@ td {
   border-radius: 8px;
   font-weight: 600;
 }
-.botao-voltar:hover{
+
+.botao-voltar:hover {
   background: #1d4ed8;
 }
 
@@ -99,6 +106,7 @@ td {
 
   overflow: hidden;
 }
+
 .Imagem {
   max-width: 70px;
   max-height: 45px;
@@ -128,22 +136,97 @@ td {
 /* Tabelas */
 
 .layout {
-    display: flex;
-    gap: 0;
-    max-width: fit-content;
-    margin: 40px auto;
-    align-items: flex-start;
-    background-color: lightgray;
-    border-radius: 16px;
-    overflow: hidden;
+  display: flex;
+  gap: 0;
+  max-width: fit-content;
+  margin: 40px auto;
+  align-items: flex-start;
+  background-color: lightgray;
+  border-radius: 16px;
+  overflow: hidden;
 }
+
 .col-tabela {
   flex: 1;
 }
+
 .col-filtro {
   width: 280px;
 }
 
 .table-filtro {
   width: 100%;
+}
+
+/* Fundo escuro atrás do modal */
+.modal-fundo {
+  display: none;
+  /* Começa escondido */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  /* Fica por cima de tudo */
+}
+
+/* A caixinha branca do formulário */
+.modal-conteudo {
+  background: white;
+  padding: 30px;
+  border-radius: 16px;
+  width: 350px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  position: relative;
+}
+
+/* O "X" para fechar */
+.fechar-modal {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  font-size: 24px;
+  cursor: pointer;
+  color: #6b7280;
+}
+
+/* Estilo do formulário do modal */
+#formCadastrarCarro {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+#formCadastrarCarro label {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: -5px;
+}
+
+#formCadastrarCarro input {
+  height: 38px;
+  border-radius: 8px;
+  border: 1px solid #cbd5e1;
+  padding: 0 10px;
+}
+
+.btn-salvar {
+  margin-top: 15px;
+  background: #10b981;
+  /* Verde sucesso */
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.btn-salvar:hover {
+  background: #059669;
 }

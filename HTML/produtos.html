@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,252 +13,146 @@
 
     <!-- LOGO -->
 
-     <div class="logo-wrapper">
-            <img src="../fotos/logo.png" alt="Logo J-Car" class="logo">
-        </div>
-
-         <!-- Coluna esquerda -->
-
-
-<div class="layout">
-    <div class="filtro2">
-        
-        <table class="filtro">
-            <tr class="tfiltro">
-                <th colspan="2" height="78px">Filtros</th>
-            </tr>
-
-            <tr>
-                <td  height="55px" class="pop">Preço</td>
-                <td>
-                    <select>
-                        <option>Todos</option>
-                        <option>Até 300.000</option>
-                        <option>300.000 - 600.000</option>
-                        <option>Acima de 600.000</option>
-                    </select>
-                </td>
-            </tr>
-
-            <tr>
-                <td height="60px" class="pop">Categoria</td>
-                <td>
-                    <select>
-                        <option>Todas</option>
-                        <option>sedan</option>
-                        <option>SUV</option>
-                        <option>Hatch</option>
-                    </select>
-                </td>
-            </tr>
-
-            <tr>
-                <td height="60px" class="pop">Carros</td>
-                <td>
-                    <input type="texte" placeholder="Ex: BMW">
-                </td>
-            </tr>
-
-            <tr>
-                <td height="60px" class="pop">Modelo</td>
-                <td>
-                    <input type="text" placeholder="ex: AMG">
-                </td>
-            </tr>
-
-            
-            <tr>
-                <td height="55px" class="pop">Ano</td>
-                <td>
-                    <select>
-                        <option>2024</option>
-                        <option>2025</option>
-                        <option>2026</option>
-                    </select>
-                   
-                </td>
-            </tr>
-
-            <tr>
-                <td colspan="2" align="center" height="60px">
-                    <a href="menu.html" class="botao-voltar"> ← Voltar</a>
-                </td>
-            </tr>
-
-        </table>
-       
-
-
-
+    <div class="logo-wrapper">
+        <img src="../fotos/logo.png" alt="Logo J-Car" class="logo">
     </div>
 
-        <!-- Tabela do nosso estoque --> 
+    <!-- Coluna esquerda -->
 
-    <div class="col-tabela">
 
-     
+    <div class="layout">
+        <div class="filtro2">
+
+            <table class="filtro">
+                <tr class="tfiltro">
+                    <th colspan="2" height="78px">Filtros</th>
+                </tr>
+
+                <tr>
+                    <td height="55px" class="pop">Preço</td>
+                    <td>
+                        <select>
+                            <option>Todos</option>
+                            <option>Até 300.000</option>
+                            <option>300.000 - 600.000</option>
+                            <option>Acima de 600.000</option>
+                        </select>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td height="60px" class="pop">Categoria</td>
+                    <td>
+                        <select>
+                            <option>Todas</option>
+                            <option>sedan</option>
+                            <option>SUV</option>
+                            <option>Hatch</option>
+                        </select>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td height="60px" class="pop">Carros</td>
+                    <td>
+                        <input type="texte" placeholder="Ex: BMW">
+                    </td>
+                </tr>
+
+                <tr>
+                    <td height="60px" class="pop">Modelo</td>
+                    <td>
+                        <input type="text" placeholder="ex: AMG">
+                    </td>
+                </tr>
+
+
+                <tr>
+                    <td height="55px" class="pop">Ano</td>
+                    <td>
+                        <select>
+                            <option>2024</option>
+                            <option>2025</option>
+                            <option>2026</option>
+                        </select>
+
+                    </td>
+                </tr>
+
+
+
+                <tr>
+                    <td colspan="2" align="center" height="80px">
+                        <button id="btnAbrirModal"
+                            style="background: #2563eb; color: white; width: 85%; padding: 14px; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 15px; transition: 0.3s; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+                            + Cadastrar Novo Carro
+                        </button>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td colspan="2" align="center" height="60px">
+                        <a href="menu.html" class="botao-voltar"> ← Voltar</a>
+                    </td>
+                </tr>
+
+            </table>
+
+
+
+
+        </div>
+
+        <!-- Tabela do nosso estoque -->
+
+
 
         <table class="table">
-            
             <tr class="itens">
                 <th class="i1" height="78px">Imagem</th>
-                <th>Carro</th>
+                <th>Marca</th>
                 <th>Modelo</th>
                 <th>Ano</th>
                 <th>Categoria</th>
                 <th class="v1">Valor</th>
-                <th>Qtd</th>
+                <th>Cor</th>
                 <th>&nbsp;</th>
                 <th>&nbsp;</th>
             </tr>
 
-             <tr class="marca">
-                <td colspan="9" align="center">BMW</tr>
-            </tr>
-
-            <tr>
-                <td class="col-img">
-                    <img class="Imagem" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgyGMEjg4aJ8fCg081Sx7hllutilKxBmlcGkeSbadjuFRUh_H2Rd56ivz6CpvNcTGpw0iAGQ3S0bteRC5x7neIdltcbpiyqb7LWgbdUyGrgWqbCKh8PBuXSq5SqYHeMN2MI3K1DmJTbnh7wW-HI895QnVfrlZjhwf09zVCxRzEcjksRZ0rQkTdmw4P4yBQv/s2560/Novo-BMW-Serie-3-Sedan-2025%20%2810%29.jpg"></img>
-                </td>
-                <td class="carro">320i</td>
-                <td>M SPORT</td>
-                <td>2026</td>
-                <td>Sedan</td>
-                <td class="valor">360.000,00</td> <!--VALOR-->
-                <td>2</td>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
-            </tr>
-
-             <tr>
-                 <td class="col-img">
-                    <img class="Imagem" src="https://www.motoragora.com.br/wp-content/uploads/2024/07/bmw-x6-m-competition-2025-roxo-na-diagonal.jpg"></img>
-                </td>
-                <td class="carro">BMW X6</td>
-                <td>M COMPETITiON</td>
-                <td>2026</td>
-                <td>SUV</td>
-                <td class="valor">1.050.00000,00</td> <!--VALOR-->
-                <td>3</td>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
-            </tr>
-
-            <tr>
-                <td class="col-img">
-                    <img class="Imagem" src="https://quatrorodas.abril.com.br/wp-content/uploads/2016/11/644_bmw_03.jpeg?quality=70&strip=info&w=928&w=636"></img>
-                </td>
-                <td class="carro">125i</td>
-                <td>M SPORT</td>
-                <td>2026</td>
-                <td>Hatch</td>
-                <td class="valor">320.000,00</td> <!--VALOR-->
-                <td>4</td>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
-            </tr>
-
-
-             <tr class="marca">
-                <td colspan="9" align="center">MERCEDES</tr>
-            </tr>
-
-            <tr>
-                 <td class="col-img">
-                    <img class="Imagem" src="https://ev-database.org/img/auto/Mercedes_CLA/Mercedes_CLA-01@2x.jpg"></img>
-                </td>
-                <td class="carro">CLA 250</td>
-                <td>AMG</td>
-                <td>2026</td>
-                <td>sedan</td>
-                <td class="valor">350.000,00</td> <!--VALOR-->
-                <td>2</td>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
-            </tr>
-
-             <tr>
-                 <td class="col-img">
-                    <img class="Imagem" src="https://cdn.motor1.com/images/mgl/m1N64/s1/2016-mercedes-benz-gle450-amg-coupe.jpg"></img>
-                </td>
-                <td class="carro">GLE 450</td>
-                <td>AMG</td>
-                <td>2026</td>
-                <td>SUV</td>
-                <td class="valor">780.000,00</td> <!--VALOR-->
-                <td>1</td>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
-            </tr>
-
-            <tr>
-                <td class="col-img">
-                    <img class="Imagem" src="https://revistafullpower.com.br/wp-content/uploads/2020/08/me01.jpg"></img>
-                </td>
-                <td class="carro">A 45</td>
-                <td>AMG</td>
-                <td>2026</td>
-                <td>Hatch</td>
-                <td class="valor">520.000,00</td> <!--VALOR-->
-                <td>2</td>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
-            </tr>
-
-
-             <tr class="marca">
-                <td colspan="9" align="center">AUDI</tr>
-            </tr>
-
-            <tr>
-                 <td class="col-img">
-                    <img class="Imagem" src="https://admin.cnnbrasil.com.br/wp-content/uploads/sites/12/2025/04/Audi-A5-Sedan-2025-7-e1744685430812.jpg"></img>
-                </td>
-                <td class="carro">AUDI A5</td>
-                <td>SPORTBACK</td>
-                <td>2026</td>
-                <td>Sedan</td>
-                <td class="valor">420.000,00</td> <!--VALOR-->
-                <td>3</td>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
-            </tr>
-
-             <tr>
-                <td class="col-img">
-                    <img class="Imagem" src="https://p2.trrsf.com/image/fget/cf/940/0/images.terra.com/2024/11/27/novo-audi-q5-sportback-2025-2025-uvjqw0s9x5bn.jpg"></img>
-                </td>
-                <td class="carro">AUDI Q5</td>
-                <td>RS</td>
-                <td>2026</td>
-                <td>SUV</td>
-                <td class="valor">650.000,00</td> <!--VALOR-->
-                <td>2</td>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
-            </tr>
-
-            <tr>
-                <td class="col-img" >
-                    <img class="Imagem" src="https://www.km77.com/images/medium/3/7/6/9/audi-rs3-2024-frontal-lateral.373769.jpg"></img>
-                </td>
-                <td class="carro">AUDI A3</td>
-                <td>RS</td>
-                <td>2026</td>
-                <td>Hatch</td>
-                <td class="valor">380.000,00</td> <!--VALOR-->
-                <td>5</td>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
-            </tr>
-
+            <tbody id="corpoTabelaCarros">
+            </tbody>
         </table>
 
     </div>
-</div>        
-    <div>
-        
-        <!-- Coluna esquerda -->
     </div>
+    <div id="modalCadastro" class="modal-fundo">
+        <div class="modal-conteudo">
+            <span id="btnFecharModal" class="fechar-modal">&times;</span>
+            <h2 style="margin-top: 0; color: #111827;">Cadastrar Novo Veículo</h2>
+
+            <form id="formCadastrarCarro">
+                <label>Marca:</label>
+                <input type="text" id="cadMarca" required placeholder="Ex: Porsche">
+
+                <label>Modelo:</label>
+                <input type="text" id="cadModelo" required placeholder="Ex: 911 Carrera">
+
+                <label>Ano:</label>
+                <input type="number" id="cadAno" required placeholder="Ex: 2026">
+
+                <label>Preço:</label>
+                <input type="number" step="0.01" id="cadPreco" required placeholder="Ex: 850000.00">
+
+                <label>Cor:</label>
+                <input type="text" id="cadCor" placeholder="Ex: Prata">
+
+                <button type="submit" class="btn-salvar">Salvar Carro no Banco</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="../js/produtos.js"></script>
 </body>
+
 </html>
