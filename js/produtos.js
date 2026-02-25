@@ -191,3 +191,30 @@ inputBusca.addEventListener('input', () => {
         }
     }
 });
+
+const filtroPreco = document.getElementById('filtroPreco');
+
+function aplicarFiltros() {
+    const faixaPreco = filtroPreco.value;
+    const linhas = document.querySelectorAll('#corpoTabelaCarros tr');
+
+    linhas.forEach(linha => {
+        // Pegamos o valor da coluna Preço (6ª coluna - índice 5)
+        // Removemos pontos e trocamos vírgula por ponto para o JS entender como número
+        const precoTexto = linha.cells[5].textContent.replace(/\./g, '').replace(',', '.');
+        const preco = parseFloat(precoTexto);
+
+        let batePreco = true;
+        if (faixaPreco === "300000") batePreco = preco <= 300000;
+        else if (faixaPreco === "600000") batePreco = preco > 300000 && preco <= 600000;
+        else if (faixaPreco === "acima") batePreco = preco > 600000;
+
+        if (batePreco) {
+            linha.style.display = "";
+        } else {
+            linha.style.display = "none";
+        }
+    });
+}
+
+filtroPreco.addEventListener('change', aplicarFiltros);
