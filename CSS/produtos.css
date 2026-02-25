@@ -230,3 +230,35 @@ td {
 .btn-salvar:hover {
   background: #059669;
 }
+
+/* Ajuste para o campo de seleção (Carroceria) ficar igual aos inputs de texto */
+#formCadastrarCarro select {
+  width: 100%;
+  padding: 10px;
+  /* Dá o "recheio" interno para não ficar achatado */
+  margin-top: 5px;
+  /* Espaço em cima */
+  margin-bottom: 3px;
+  /* Espaço em baixo */
+  border: 1px solid #ccc;
+  /* Borda cinza clara igual aos outros */
+  border-radius: 5px;
+  /* Bordas arredondadas */
+  font-size: 16px;
+  /* Tamanho da fonte */
+  font-family: inherit;
+  /* Pega a mesma fonte do resto do site */
+  box-sizing: border-box;
+  /* Garante que não vai vazar para os lados */
+  background-color: #fff;
+  /* Fundo branco */
+  cursor: pointer;
+  /* Muda o mouse para a "mãozinha" */
+}
+
+/* Opcional: Efeito quando clica nele (igual ao input) */
+#formCadastrarCarro select:focus {
+  outline: none;
+  border-color: #2563eb;
+  /* Fica azul quando clica (mesma cor do seu botão) */
+}
