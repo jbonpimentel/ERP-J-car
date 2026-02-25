@@ -81,7 +81,9 @@ form.addEventListener('submit', async (evento) => {
             modal.style.display = "none";
             form.reset();
             idCarroSendoEditado = null; // Limpa a memória por segurança
-            carregarCarros(); // Atualiza a tabela na tela
+            carregarCarros();
+            corpoTabela.appendChild(linha); // Atualiza a tabela na tela
+            aplicarFiltros();
         } else {
             alert('❌ Ops! Ocorreu um erro.');
         }
@@ -192,37 +194,45 @@ inputBusca.addEventListener('input', () => {
     }
 });
 
-const filtroPreco = document.getElementById('filtroPreco');
-
-const filtroModelo = document.getElementById('filtroModelo');
+// ==========================================
+// 7. LÓGICA DE FILTROS INTEGRADA
+// ==========================================
 
 function aplicarFiltros() {
-    const termoBusca = document.getElementById('inputBusca').value.toLowerCase();
-    const termoModelo = filtroModelo.value.toLowerCase();
-    const faixaPreco = document.getElementById('filtroPreco').value;
+    const termoBusca = document.getElementById('inputBusca')?.value.toLowerCase() || "";
+    const termoModelo = document.getElementById('filtroModelo')?.value.toLowerCase() || "";
+    const termoAno = document.getElementById('filtroAno')?.value || "";
+    const faixaPreco = document.getElementById('filtroPreco')?.value || "todos";
 
     const linhas = document.querySelectorAll('#corpoTabelaCarros tr');
 
     linhas.forEach(linha => {
-        const marca = linha.cells[1].textContent.toLowerCase();
-        const modelo = linha.cells[2].textContent.toLowerCase();
-        const precoTexto = linha.cells[5].textContent.replace(/\./g, '').replace(',', '.');
-        const preco = parseFloat(precoTexto);
+        // Captura de dados das colunas
+        const marca = linha.cells[1]?.textContent.toLowerCase() || "";
+        const modelo = linha.cells[2]?.textContent.toLowerCase() || "";
+        const anoNaTabela = linha.cells[3]?.textContent.trim() || "";
 
-        // Regra 1: Busca Geral (Marca ou Modelo)
+        // Limpeza do Preço: Remove R$, pontos e ajusta a vírgula
+        let precoTexto = linha.cells[5]?.textContent || "0";
+        precoTexto = precoTexto.replace('R$', '').replace(/\./g, '').replace(',', '.').trim();
+        const precoNum = parseFloat(precoTexto);
+
+        // Lógica de Comparação
         const bateBusca = marca.includes(termoBusca) || modelo.includes(termoBusca);
-
-        // Regra 2: Filtro específico de Modelo
         const bateModelo = modelo.includes(termoModelo);
+        const bateAno = termoAno === "" || anoNaTabela.includes(termoAno);
 
-        // Regra 3: Filtro de Preço
         let batePreco = true;
-        if (faixaPreco === "300000") batePreco = preco <= 300000;
-        else if (faixaPreco === "600000") batePreco = preco > 300000 && preco <= 600000;
-        else if (faixaPreco === "acima") batePreco = preco > 600000;
+        if (faixaPreco === "300000") {
+            batePreco = precoNum <= 300000;
+        } else if (faixaPreco === "600000") {
+            batePreco = precoNum > 300000 && precoNum <= 600000;
+        } else if (faixaPreco === "acima") {
+            batePreco = precoNum > 600000;
+        }
 
-        // Só mostra se passar em TODAS as regras
-        if (bateBusca && bateModelo && batePreco) {
+        // Aplicação do Filtro Visual
+        if (bateBusca && bateModelo && bateAno && batePreco) {
             linha.style.display = "";
         } else {
             linha.style.display = "none";
@@ -230,6 +240,8 @@ function aplicarFiltros() {
     });
 }
 
-// Adiciona o evento para o novo campo
-filtroModelo.addEventListener('input', aplicarFiltros);
-
+// Listeners (Escutadores) - Adicione estes se não houver
+document.getElementById('inputBusca')?.addEventListener('input', aplicarFiltros);
+document.getElementById('filtroModelo')?.addEventListener('input', aplicarFiltros);
+document.getElementById('filtroAno')?.addEventListener('input', aplicarFiltros);
+document.getElementById('filtroPreco')?.addEventListener('change', aplicarFiltros);
