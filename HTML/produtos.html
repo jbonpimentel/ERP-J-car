@@ -10,19 +10,12 @@
 </head>
 
 <body>
-
-    <!-- LOGO -->
-
     <div class="logo-wrapper">
         <img src="../fotos/logo.png" alt="Logo J-Car" class="logo">
     </div>
 
-    <!-- Coluna esquerda -->
-
-
     <div class="layout">
         <div class="filtro2">
-
             <table class="filtro">
                 <tr class="tfiltro">
                     <th colspan="2" height="78px">Filtros</th>
@@ -48,13 +41,15 @@
                 </tr>
 
                 <tr>
-                    <td height="60px" class="pop">Categoria</td>
+                    <td height="55px" class="pop">Carroceria</td>
                     <td>
-                        <select>
-                            <option>Todas</option>
-                            <option>sedan</option>
-                            <option>SUV</option>
-                            <option>Hatch</option>
+                        <select id="filtroCarroceria">
+                            <option value="todos">Todos</option>
+                            <option value="SUV">SUV</option>
+                            <option value="Sedan">Sedan</option>
+                            <option value="Hatch">Hatch</option>
+                            <option value="Coupé">Coupé</option>
+                            <option value="Conversível">Conversível</option>
                         </select>
                     </td>
                 </tr>
@@ -66,15 +61,12 @@
                     </td>
                 </tr>
 
-
                 <tr>
                     <td height="60px" class="pop">Ano</td>
                     <td>
                         <input type="number" id="filtroAno" placeholder="Ex: 2024">
                     </td>
                 </tr>
-
-
 
                 <tr>
                     <td colspan="2" align="center" height="80px">
@@ -90,37 +82,28 @@
                         <a href="menu.html" class="botao-voltar"> ← Voltar</a>
                     </td>
                 </tr>
-
             </table>
-
-
-
-
         </div>
 
-        <!-- Tabela do nosso estoque -->
-
-
-
         <table class="table">
-            <tr class="itens">
-                <th class="i1" height="78px">Imagem</th>
-                <th>Marca</th>
-                <th>Modelo</th>
-                <th>Ano</th>
-                <th>Categoria</th>
-                <th class="v1">Valor</th>
-                <th>Cor</th>
-                <th>&nbsp;</th>
-                <th>&nbsp;</th>
-            </tr>
-
+            <thead>
+                <tr class="itens">
+                    <th class="i1" height="78px">Imagem</th>
+                    <th>Marca</th>
+                    <th>Modelo</th>
+                    <th>Ano</th>
+                    <th>Categoria</th>
+                    <th class="v1">Valor</th>
+                    <th>Cor</th>
+                    <th>&nbsp;</th>
+                    <th>&nbsp;</th>
+                </tr>
+            </thead>
             <tbody id="corpoTabelaCarros">
             </tbody>
         </table>
+    </div>
 
-    </div>
-    </div>
     <div id="modalCadastro" class="modal-fundo">
         <div class="modal-conteudo">
             <span id="btnFecharModal" class="fechar-modal">&times;</span>
@@ -132,6 +115,15 @@
 
                 <label>Modelo:</label>
                 <input type="text" id="cadModelo" required placeholder="Ex: 911 Carrera">
+
+                <label>Carroceria:</label>
+                <select id="cadCategoria" required>
+                    <option value="SUV">SUV</option>
+                    <option value="Sedan">Sedan</option>
+                    <option value="Hatch">Hatch</option>
+                    <option value="Coupé">Coupé</option>
+                    <option value="Conversível">Conversível</option>
+                </select>
 
                 <label>Ano:</label>
                 <input type="number" id="cadAno" required placeholder="Ex: 2026">
