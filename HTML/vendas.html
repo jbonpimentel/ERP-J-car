@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Nova Venda - J-Car</title>
+    <link rel="stylesheet" href="../CSS/global.css">
+</head>
+
+<body>
+
+    <div class="logo-wrapper">
+        <img src="../fotos/logo.png" alt="Logo J-Car" class="logo">
+    </div>
+
+    <div class="layout">
+
+        <div class="col-tabela" style="flex: 2;">
+            <h2 style="margin-top: 0; color: #111827;">Painel de Negociação</h2>
+
+            <div class="sessao-venda">
+                <h3>1. Dados do Comprador</h3>
+                <div class="grid-form">
+                    <div class="campo">
+                        <label>CPF do Cliente</label>
+                        <div style="display: flex; gap: 10px;">
+                            <input type="text" id="vendaCpf" placeholder="Digite apenas números" maxlength="11">
+                            <button type="button" id="btnValidarCpf"
+                                style="background: #2563eb; color: white; border: none; border-radius: 6px; padding: 0 15px; cursor: pointer; font-weight: bold;">Validar</button>
+                        </div>
+                    </div>
+                    <div class="campo">
+                        <label>Nome do Cliente <span id="statusScore" class="badge">Aguardando...</span></label>
+                        <input type="text" id="vendaNome" placeholder="Buscando no banco..." readonly
+                            style="background-color: #e5e7eb;">
+                    </div>
+                </div>
+            </div>
+
+            <div class="sessao-venda">
+                <h3>2. Veículo Negociado</h3>
+                <div class="grid-form">
+                    <div class="campo">
+                        <label>Selecione o Carro do Estoque</label>
+                        <select id="vendaCarro">
+                            <option value="">-- Carregando estoque disponível --</option>
+                        </select>
+                    </div>
+                    <div class="campo">
+                        <label>Valor de Tabela (R$)</label>
+                        <input type="text" id="vendaValorCarro" readonly
+                            style="background-color: #e5e7eb; font-weight: bold; color: #2563eb;">
+                    </div>
+                </div>
+            </div>
+
+            <div class="sessao-venda" style="border-bottom: none;">
+                <h3>3. Condições de Pagamento</h3>
+                <div class="grid-form">
+                    <div class="campo">
+                        <label>Forma de Pagamento</label>
+                        <select id="vendaFormaPagamento">
+                            <option value="avista">À Vista (PIX/Transferência)</option>
+                            <option value="financiamento">Financiamento Bancário</option>
+                        </select>
+                    </div>
+                    <div class="campo">
+                        <label>Valor da Entrada (R$)</label>
+                        <input type="number" id="vendaEntrada" placeholder="Ex: 50000" disabled>
+                    </div>
+                    <div class="campo">
+                        <label>Parcelamento</label>
+                        <select id="vendaParcelas" disabled>
+                            <option value="12">12x vezes</option>
+                            <option value="24">24x vezes</option>
+                            <option value="36">36x vezes</option>
+                            <option value="48">48x vezes</option>
+                            <option value="60">60x vezes</option>
+                        </select>
+                    </div>
+                    <div class="campo">
+                        <label>Taxa de Juros (Simulada)</label>
+                        <input type="text" value="1.5% a.m." readonly style="background-color: #e5e7eb;">
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="recibo-painel">
+            <h2 style="margin-top: 0; border-bottom: 2px solid #374151; padding-bottom: 10px;">Resumo da Venda</h2>
+
+            <div class="recibo-linha">
+                <span>Comprador:</span>
+                <span id="resumoCliente" style="font-weight: bold;">---</span>
+            </div>
+
+            <div class="recibo-linha">
+                <span>Veículo:</span>
+                <span id="resumoCarro" style="font-weight: bold;">---</span>
+            </div>
+
+            <div class="recibo-linha">
+                <span>Valor Tabela:</span>
+                <span id="resumoValorTabela">R$ 0,00</span>
+            </div>
+
+            <div class="recibo-linha">
+                <span>Condição:</span>
+                <span id="resumoCondicao">À Vista</span>
+            </div>
+
+            <div class="recibo-linha">
+                <span>Entrada:</span>
+                <span id="resumoEntrada">R$ 0,00</span>
+            </div>
+
+            <div class="recibo-linha">
+                <span>Valor Financiado:</span>
+                <span id="resumoFinanciado">R$ 0,00</span>
+            </div>
+
+            <div class="recibo-linha">
+                <span>Parcelas:</span>
+                <span id="resumoParcelasTxt" style="color: #60a5fa; font-weight: bold;">---</span>
+            </div>
+
+            <div class="recibo-total">
+                <span>TOTAL FINAL:</span>
+                <span id="resumoTotal">R$ 0,00</span>
+            </div>
+
+            <button id="btnConfirmarVenda" class="btn-salvar"
+                style="margin-top: 30px; font-size: 16px; padding: 15px; display: none;">
+                ✅ Confirmar Venda
+            </button>
+
+            <div style="text-align: center; margin-top: 20px;">
+                <a href="menu.html" style="color: #9ca3af; text-decoration: none; font-size: 14px;">← Cancelar e
+                    Voltar</a>
+            </div>
+
+        </div>
+
+    </div>
+
+    <script src="../js/vendas.js"></script>
+</body>
+
+</html>

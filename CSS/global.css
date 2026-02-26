@@ -328,3 +328,93 @@ body {
 .auth-link:hover {
     text-decoration: underline;
 }
+
+/* ==========================================
+   8. MÓDULO DE VENDAS (CHECKOUT E RECIBO)
+   ========================================== */
+
+/* Estrutura do Formulário de Venda */
+.sessao-venda {
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.sessao-venda h3 {
+    color: #2563eb;
+    margin-top: 0;
+    font-size: 18px;
+}
+
+.grid-form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+.campo label {
+    display: block;
+    font-weight: 600;
+    color: #4b5563;
+    font-size: 13px;
+    margin-bottom: 5px;
+    text-transform: uppercase;
+}
+
+.campo input,
+.campo select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    background-color: #f9fafb;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+/* Painel Escuro do Recibo (Lado Direito) */
+.recibo-painel {
+    background-color: #1f2937;
+    color: white;
+    border-radius: 8px;
+    padding: 25px;
+    width: 320px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+.recibo-linha {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+    font-size: 14px;
+    border-bottom: 1px solid #374151;
+    padding-bottom: 5px;
+}
+
+.recibo-total {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 25px;
+    font-size: 20px;
+    font-weight: bold;
+    color: #10b981;
+}
+
+/* Badge de Status (Ex: Aprovado / Reprovado) */
+.badge {
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: bold;
+    color: white;
+    background: #9ca3af;
+}
+
+/* Cores dinâmicas para o JS usar depois nas badges */
+.badge.sucesso {
+    background-color: #10b981;
+}
+
+.badge.erro {
+    background-color: #ef4444;
+}
