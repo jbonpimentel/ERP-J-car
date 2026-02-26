@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Gestão de Usuários - J-Car</title>
+    <link rel="stylesheet" href="../CSS/global.css">
+</head>
+
+<body>
+
+    <div class="logo-wrapper">
+        <img src="../fotos/logo.png" alt="Logo J-Car" class="logo">
+    </div>
+
+    <div class="layout">
+
+        <div class="col-filtro">
+            <table class="table-filtro">
+                <tr class="filtroT">
+                    <th height="78px">Painel Admin</th>
+                </tr>
+                <tr>
+                    <td style="padding-top: 20px; color: #4b5563; font-size: 14px;">
+                        Aqui você gerencia quem tem acesso ao sistema da J-Car.
+                    </td>
+                </tr>
+                <tr>
+                    <td align="center" height="80px" style="padding-top: 30px;">
+                        <a href="menu.html" class="botao-voltar" style="margin-top: 0;">← Voltar ao menu</a>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="col-tabela">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th height="78px" style="border-top-left-radius: 8px;">ID</th>
+                        <th>E-mail (Login)</th>
+                        <th>Data de Criação</th>
+                        <th style="border-top-right-radius: 8px; text-align: center;">Ação</th>
+                    </tr>
+                </thead>
+                <tbody id="corpoTabelaUsuarios">
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+    <script src="../js/usuarios.js"></script>
+</body>
+
+</html>

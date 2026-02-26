@@ -1,37 +1,49 @@
 const email = document.getElementById("email");
 const password = document.getElementById("password");
 const confirmPassword = document.getElementById("confirm-password");
-const form = document.querySelector("form"); // Captura o formulário
+const form = document.querySelector("form");
 const erro = document.querySelector(".erro");
 const sucesso = document.querySelector(".sucesso");
 
-form.addEventListener("submit", (evento) => {
-    evento.preventDefault(); // Impede a página de recarregar
+form.addEventListener("submit", async (evento) => {
+    evento.preventDefault();
+    erro.style.display = "none";
+    sucesso.style.display = "none";
 
+    // Validação básica rápida no Front-end (só para agilizar)
     if (password.value !== confirmPassword.value) {
+        erro.textContent = "As senhas não conferem";
         erro.style.display = "block";
-        sucesso.style.display = "none";
         return;
     }
 
-    erro.style.display = "none";
+    try {
+        // Envia os dados para o Backend validar e salvar
+        const resposta = await fetch('http://localhost:3000/signup', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                email: email.value,
+                password: password.value
+            })
+        });
 
-    let users = JSON.parse(localStorage.getItem("users")) || [];
-    const newUser = {
-        email: email.value,
-        password: password.value,
-    };
+        const dados = await resposta.json();
 
-    users.push(newUser);
-    localStorage.setItem("users", JSON.stringify(users));
+        if (resposta.ok) {
+            sucesso.textContent = dados.mensagem;
+            sucesso.style.display = "block";
 
-    sucesso.style.display = "block";
-
-    // Limpa os campos após 2 segundos e manda para o login
-    setTimeout(() => {
-        email.value = "";
-        password.value = "";
-        confirmPassword.value = "";
-        window.location.href = "login.html";
-    }, 2000);
+            setTimeout(() => {
+                window.location.href = "login.html";
+            }, 2000);
+        } else {
+            // Mostra o erro exato que o Backend (TypeScript) mandou
+            erro.textContent = dados.mensagem;
+            erro.style.display = "block";
+        }
+    } catch (error) {
+        erro.textContent = "Erro de conexão com o servidor.";
+        erro.style.display = "block";
+    }
 });

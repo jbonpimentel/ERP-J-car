@@ -12,16 +12,42 @@
   <div class="card-vidro menu">
 
     <img src="../fotos/logo.png" alt="Logo J-Car" class="logo">
-
     <h2 style="color: #2563eb; margin-bottom: 24px;">Menu Principal</h2>
 
     <div class="menu-opcoes">
       <a href="produtos.html" class="btn-acao">📦 Estoque</a>
       <a href="clientes.html" class="btn-acao">👥 Clientes</a>
-      <a href="login.html" class="btn-acao sair">🚪 Sair</a>
+
+      <a href="usuarios.html" id="btnAdmin" class="btn-acao" style="background-color: #4b5563; display: none;">⚙️ Gestão
+        de Acessos</a>
+
+      <a href="login.html" class="btn-acao sair" onclick="fazerLogout()">🚪 Sair</a>
     </div>
 
   </div>
+
+  <script>
+    // 1. Pega o crachá do usuário logado
+    const usuarioString = localStorage.getItem('usuarioLogado');
+
+    // 2. Segurança Extra: Se tentar acessar o menu direto pela URL sem logar, é expulso!
+    if (!usuarioString) {
+      window.location.href = "login.html";
+    } else {
+      const usuario = JSON.parse(usuarioString);
+
+      // 3. Verifica se é O CHEFE (João)
+      // Você pode checar pelo ID ou pelo email
+      if (usuario.id === 1 || usuario.email === 'joao@evoplan.com') {
+        document.getElementById('btnAdmin').style.display = "block"; // Mostra o botão!
+      }
+    }
+
+    // 4. Função para "rasgar o crachá" ao sair do sistema
+    function fazerLogout() {
+      localStorage.removeItem('usuarioLogado');
+    }
+  </script>
 
 </body>
 

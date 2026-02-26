@@ -187,3 +187,85 @@ app.delete('/clientes/:id', (req, res) => {
         res.status(200).json({ mensagem: 'Cliente excluído com sucesso!' });
     });
 });
+
+
+// =========================================================
+// ROTAS PARA USUÁRIOS E AUTENTICAÇÃO (Login / Signup)
+// =========================================================
+
+// ---------------------------------------------------------
+// 1. CRIAR CONTA COM VALIDAÇÃO (POST /signup)
+// ---------------------------------------------------------
+app.post('/signup', (req, res) => {
+    const { email, password } = req.body;
+
+    // VALIDAÇÃO 1: Campos vazios ou formato inválido
+    if (!email || !email.includes('@') || !email.includes('.')) {
+        return res.status(400).json({ mensagem: 'Formato de e-mail inválido.' });
+    }
+
+    // VALIDAÇÃO 2: Segurança da senha
+    if (!password || password.length < 6) {
+        return res.status(400).json({ mensagem: 'A senha deve ter no mínimo 6 caracteres.' });
+    }
+
+    // VALIDAÇÃO 3: Verificar se o e-mail já existe no banco
+    conexao.query('SELECT * FROM usuarios WHERE email = ?', [email], (erro, resultados: any[]) => {
+        if (erro) return res.status(500).json({ mensagem: 'Erro ao consultar o banco.' });
+
+        if (resultados.length > 0) {
+            return res.status(400).json({ mensagem: 'Este e-mail já está cadastrado!' });
+        }
+
+        // Se passou por todas as validações, salva no banco!
+        const comandoSql = 'INSERT INTO usuarios (email, senha) VALUES (?, ?)';
+        conexao.query(comandoSql, [email, password], (erro2) => {
+            if (erro2) return res.status(500).json({ mensagem: 'Erro ao criar conta.' });
+            res.status(201).json({ mensagem: 'Conta criada com sucesso!' });
+        });
+    });
+});
+
+// ---------------------------------------------------------
+// 2. FAZER LOGIN (POST /login)
+// ---------------------------------------------------------
+app.post('/login', (req, res) => {
+    const { email, password } = req.body;
+
+    // Busca o usuário que tenha esse email e essa senha exata
+    const comandoSql = 'SELECT * FROM usuarios WHERE email = ? AND senha = ?';
+
+    conexao.query(comandoSql, [email, password], (erro, resultados: any[]) => {
+        if (erro) return res.status(500).json({ mensagem: 'Erro interno no servidor.' });
+
+        if (resultados.length > 0) {
+            // Achou o usuário! Login liberado.
+            // (Em um sistema real, aqui geraríamos um Token JWT, mas vamos passo a passo)
+            res.status(200).json({ mensagem: 'Login aprovado!', usuario: resultados[0] });
+        } else {
+            // Não achou ou a senha está errada
+            res.status(401).json({ mensagem: 'E-mail ou senha incorretos.' });
+        }
+    });
+});
+
+// ---------------------------------------------------------
+// 3. LISTAR TODOS OS USUÁRIOS (Para o seu painel de gestão)
+// ---------------------------------------------------------
+app.get('/usuarios', (req, res) => {
+    conexao.query('SELECT id, email, criado_em FROM usuarios', (erro, resultados) => {
+        if (erro) return res.status(500).json({ mensagem: 'Erro ao buscar usuários.' });
+        res.status(200).json(resultados);
+    });
+});
+
+// ---------------------------------------------------------
+// 4. DELETAR UM USUÁRIO (Para o seu painel de gestão)
+// ---------------------------------------------------------
+app.delete('/usuarios/:id', (req, res) => {
+    const idDoUsuario = req.params.id;
+    conexao.query('DELETE FROM usuarios WHERE id = ?', [idDoUsuario], (erro) => {
+        if (erro) return res.status(500).json({ mensagem: 'Erro ao deletar usuário.' });
+        res.status(200).json({ mensagem: 'Acesso revogado com sucesso!' });
+    });
+});
