@@ -193,3 +193,11 @@ body {
   cursor: pointer;
   color: #9ca3af;
 }
+
+.i1 {
+  border-top-left-radius: 6px;
+}
+
+.i2 {
+  border-top-right-radius: 6px;
+}
