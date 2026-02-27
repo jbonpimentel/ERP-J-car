@@ -3,55 +3,69 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>Menu - J-Car</title>
+  <title>Painel Principal - J-Car</title>
   <link rel="stylesheet" href="../CSS/global.css">
 </head>
 
-<body class="tela-central">
+<body class="bg-imagem tela-central">
 
-  <div class="card-vidro menu">
+  <div class="painel-desktop">
 
-    <img src="../fotos/logo.png" alt="Logo J-Car" class="logo">
-    <h2 style="color: #2563eb; margin-bottom: 24px;">Menu Principal</h2>
+    <div class="painel-header">
+      <img src="../fotos/logo.png" alt="Logo J-Car" class="logo-painel">
+      <div>
+        <h2>Painel de Controle</h2>
+        <p class="sub" id="boasVindas">Bem-vindo ao sistema de gestão J-Car.</p>
+      </div>
+    </div>
 
-    <div class="menu-opcoes">
-      <a href="vendas.html" class="btn-acao" style="background-color: #10b981;">💰 Nova Venda</a>
-      <a href="produtos.html" class="btn-acao">📦 Estoque</a>
-      <a href="vendidos.html" class="btn-acao" style="background-color: #f59e0b;">🤝 Histórico de Vendas</a>
-      <a href="clientes.html" class="btn-acao">👥 Clientes</a>
-      <a href="comissoes.html" class="btn-acao" style="background-color: #8b5cf6;">💸 Comissões e Metas</a>
+    <div class="menu-desktop-grid">
 
-      <a href="usuarios.html" id="btnAdmin" class="btn-acao" style="background-color: #4b5563; display: none;">⚙️ Gestão
-        de Acessos</a>
+      <a href="vendas.html" class="menu-card">
+        <span class="icone">💰</span>
+        <h3>Nova Venda</h3>
+        <p>Simulador de PDV, cálculo de parcelas e faturamento.</p>
+      </a>
 
-      <a href="login.html" class="btn-acao sair" onclick="fazerLogout()">🚪 Sair</a>
+      <a href="produtos.html" class="menu-card">
+        <span class="icone">📦</span>
+        <h3>Estoque</h3>
+        <p>Gestão de veículos, controle de preços e status.</p>
+      </a>
+
+      <a href="clientes.html" class="menu-card">
+        <span class="icone">👥</span>
+        <h3>Clientes</h3>
+        <p>Carteira de clientes e registro de histórico de compras.</p>
+      </a>
+
+      <a href="vendidos.html" class="menu-card">
+        <span class="icone">🤝</span>
+        <h3>Histórico de Vendas</h3>
+        <p>Relatório de carros vendidos e estorno de contratos.</p>
+      </a>
+
+      <a href="comissoes.html" class="menu-card">
+        <span class="icone">💸</span>
+        <h3>Comissões</h3>
+        <p>Acompanhamento de metas e pagamentos pendentes.</p>
+      </a>
+
+      <a href="acessos.html" class="menu-card" id="btnAdmin" style="display: none;">
+        <span class="icone">⚙️</span>
+        <h3>Gestão de Acessos</h3>
+        <p>Painel de administrador para revogar usuários.</p>
+      </a>
+
+    </div>
+
+    <div class="painel-footer">
+      <button id="btnSair" class="btn-sair-desktop">🚪 Sair do Sistema</button>
     </div>
 
   </div>
 
-  <script>
-    // 1. Pega o crachá do usuário logado
-    const usuarioString = localStorage.getItem('usuarioLogado');
-
-    // 2. Segurança Extra: Se tentar acessar o menu direto pela URL sem logar, é expulso!
-    if (!usuarioString) {
-      window.location.href = "login.html";
-    } else {
-      const usuario = JSON.parse(usuarioString);
-
-      // 3. Verifica se é O CHEFE (João)
-      // Você pode checar pelo ID ou pelo email
-      if (usuario.id === 1 || usuario.email === 'joao@evoplan.com') {
-        document.getElementById('btnAdmin').style.display = "block"; // Mostra o botão!
-      }
-    }
-
-    // 4. Função para "rasgar o crachá" ao sair do sistema
-    function fazerLogout() {
-      localStorage.removeItem('usuarioLogado');
-    }
-  </script>
-
+  <script src="../js/menu.js"></script>
 </body>
 
 </html>
