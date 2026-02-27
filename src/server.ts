@@ -364,10 +364,10 @@ app.get('/vendas', (req, res) => {
 });
 
 // ---------------------------------------------------------
-// 5. ROTA DE COMISSÕES (Para o Ranking e Pagamentos)
+// 5. MÓDULO FINANCEIRO (COMISSÕES)
 // ---------------------------------------------------------
 app.get('/comissoes', (req, res) => {
-    // Agrupa as vendas por vendedor e calcula 1% de comissão
+    // 🚨 Aqui usamos o WHERE para trazer APENAS o que está 'Pendente'
     const sql = `
         SELECT 
             u.email AS vendedor,
@@ -377,6 +377,7 @@ app.get('/comissoes', (req, res) => {
             SUM(v.valor_total) * 0.01 AS comissao_total
         FROM usuarios u
         JOIN vendas v ON u.id = v.vendedor_id
+        WHERE v.status_comissao = 'Pendente'
         GROUP BY u.id
         ORDER BY total_vendido DESC
     `;
@@ -403,15 +404,15 @@ app.get('/comissoes', (req, res) => {
 });
 
 // ---------------------------------------------------------
-// 6. PAGAR COMISSÃO (Mudar status para 'Pago')
+// 6. PAGAR COMISSÕES (Dar Baixa em Lote por Vendedor)
 // ---------------------------------------------------------
-app.put('/vendas/:id/pagar', (req, res) => {
-    const idDaVenda = req.params.id;
-    const sql = "UPDATE vendas SET status_comissao = 'Pago' WHERE id = ?";
+app.put('/vendedores/:id/pagar-comissoes', (req, res) => {
+    const vendedorId = req.params.id;
+    const sql = "UPDATE vendas SET status_comissao = 'Pago' WHERE vendedor_id = ? AND status_comissao = 'Pendente'";
 
-    conexao.query(sql, [idDaVenda], (erro) => {
-        if (erro) return res.status(500).json({ mensagem: 'Erro ao pagar comissão.' });
-        res.status(200).json({ mensagem: 'Comissão marcada como Paga! 💸' });
+    conexao.query(sql, [vendedorId], (erro) => {
+        if (erro) return res.status(500).json({ mensagem: 'Erro ao processar pagamento.' });
+        res.status(200).json({ mensagem: 'Comissões pagas com sucesso! 💸' });
     });
 });
 
