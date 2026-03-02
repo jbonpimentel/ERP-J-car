@@ -248,12 +248,12 @@ app.post('/login', (req, res) => {
 // 3. LISTAR TODOS OS USUÁRIOS (Para o seu painel de gestão)
 // ---------------------------------------------------------
 app.get('/usuarios', (req, res) => {
-    conexao.query('SELECT id, email, criado_em FROM usuarios', (erro, resultados) => {
+    // 🚨 Adicionámos o "nome" aqui no SELECT
+    conexao.query('SELECT id, nome, email, criado_em FROM usuarios', (erro, resultados) => {
         if (erro) return res.status(500).json({ mensagem: 'Erro ao buscar usuários.' });
         res.status(200).json(resultados);
     });
 });
-
 // ---------------------------------------------------------
 // 4. DELETAR UM USUÁRIO (Para o seu painel de gestão)
 // ---------------------------------------------------------
