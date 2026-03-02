@@ -1,0 +1,452 @@
+/* ==========================================
+   J-CAR ERP 2.0 - STYLESHEET PRINCIPAL (PADRÃO RNX)
+   ========================================== */
+
+/* 1. RESET E VARIÁVEIS BASE */
+body.modo-spa {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    height: 100vh;
+    overflow: hidden;
+    background-color: #f8fafc;
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    font-size: 13px;
+    color: #334155;
+}
+
+/* 2. LAYOUT PRINCIPAL (SIDEBAR E AREA PRINCIPAL) */
+.sidebar {
+    width: 220px;
+    background-color: #ffffff;
+    border-right: 1px solid #e2e8f0;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    box-shadow: 1px 0 3px rgba(0, 0, 0, 0.02);
+    z-index: 10;
+}
+
+.sidebar-topo {
+    padding: 15px;
+    border-bottom: 1px solid #e2e8f0;
+    text-align: center;
+}
+
+.sidebar-topo img {
+    height: 30px;
+}
+
+.sidebar-menu {
+    flex: 1;
+    padding: 15px 10px;
+    overflow-y: auto;
+}
+
+.menu-item {
+    display: flex;
+    align-items: center;
+    padding: 8px 12px;
+    color: #475569;
+    text-decoration: none;
+    border-radius: 4px;
+    margin-bottom: 2px;
+    font-weight: 500;
+    font-size: 13px;
+    transition: 0.2s;
+    cursor: pointer;
+}
+
+.menu-item:hover {
+    background-color: #f1f5f9;
+    color: #0f172a;
+}
+
+.menu-item.ativo {
+    background-color: #eff6ff;
+    color: #2563eb;
+    border-left: 3px solid #2563eb;
+}
+
+.sidebar-rodape {
+    padding: 15px;
+    border-top: 1px solid #e2e8f0;
+}
+
+.area-principal {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.topbar {
+    height: 45px;
+    background-color: #ffffff;
+    border-bottom: 1px solid #e2e8f0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    font-size: 12px;
+}
+
+.conteudo-dinamico {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+}
+
+.secao-tela {
+    display: none;
+}
+
+.secao-tela.ativa {
+    display: block;
+    animation: fadeIn 0.2s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(5px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.titulo-secao {
+    font-size: 18px;
+    color: #0f172a;
+    margin: 0 0 15px 0;
+}
+
+/* 3. TOOLBAR (BARRA DE FERRAMENTAS) E BUSCA */
+.toolbar-rnx {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 4px;
+    padding: 8px 15px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 15px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
+}
+
+.toolbar-acoes {
+    display: flex;
+    gap: 15px;
+    border-right: 1px solid #e2e8f0;
+    padding-right: 15px;
+}
+
+.btn-icon {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #475569;
+    font-size: 14px;
+    padding: 0;
+    transition: color 0.2s;
+}
+
+.btn-icon:hover {
+    color: #2563eb;
+}
+
+.toolbar-busca {
+    flex: 1;
+    display: flex;
+    align-items: center;
+}
+
+.input-busca {
+    width: 100%;
+    max-width: 400px;
+    padding: 6px 10px;
+    font-size: 12px;
+    border: 1px solid #cbd5e1;
+    border-radius: 4px;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.input-busca:focus {
+    border-color: #2563eb;
+}
+
+/* 4. TABELAS (DATA GRID) */
+.tabela-container {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 4px;
+    overflow-x: auto;
+}
+
+.tabela-rnx {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    font-size: 12px;
+}
+
+.tabela-rnx th {
+    padding: 10px 15px;
+    font-weight: 600;
+    border-bottom: 1px solid #e2e8f0;
+    color: #475569;
+    background: #f8fafc;
+    white-space: nowrap;
+}
+
+.tabela-rnx td {
+    padding: 10px 15px;
+    border-bottom: 1px solid #f1f5f9;
+    color: #0f172a;
+    white-space: nowrap;
+}
+
+.tabela-rnx tr:hover td {
+    background-color: #f8fafc;
+}
+
+.col-checkbox {
+    width: 30px;
+    border-right: 1px solid #f1f5f9;
+}
+
+/* 5. FORMULÁRIOS E INPUTS (MODO DENSO) */
+.grid-form {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 15px;
+}
+
+.linha-completa {
+    grid-column: 1 / -1;
+}
+
+.campo label {
+    display: block;
+    font-size: 11px;
+    font-weight: 600;
+    color: #475569;
+    margin-bottom: 4px;
+}
+
+.input-padrao {
+    width: 100%;
+    padding: 6px 8px;
+    font-size: 12px;
+    border: 1px solid #cbd5e1;
+    border-radius: 4px;
+    box-sizing: border-box;
+    height: 32px;
+    background-color: #ffffff;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.input-padrao:focus {
+    border-color: #2563eb;
+}
+
+.input-padrao:disabled {
+    background-color: #f8fafc;
+    color: #64748b;
+}
+
+.btn-primario {
+    height: 32px;
+    padding: 0 15px;
+    background: #2563eb;
+    color: #ffffff;
+    border: none;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.btn-primario:hover {
+    background: #1d4ed8;
+}
+
+.btn-sucesso {
+    background-color: #10b981;
+}
+
+.btn-sucesso:hover {
+    background-color: #059669;
+}
+
+.btn-secundario {
+    padding: 0 15px;
+    height: 32px;
+    border: 1px solid #cbd5e1;
+    background: #ffffff;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+    color: #475569;
+    transition: background-color 0.2s;
+}
+
+.btn-secundario:hover {
+    background: #f1f5f9;
+}
+
+/* 6. MODAIS */
+.modal-fundo {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(15, 23, 42, 0.6);
+    z-index: 999;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-box {
+    background: #ffffff;
+    width: 450px;
+    border-radius: 6px;
+    padding: 25px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #e2e8f0;
+    padding-bottom: 15px;
+    margin-bottom: 15px;
+}
+
+.modal-header h3 {
+    margin: 0;
+    font-size: 16px;
+    color: #0f172a;
+}
+
+.btn-fechar-modal {
+    background: none;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    color: #64748b;
+}
+
+.modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 25px;
+}
+
+/* 7. MÓDULO PDV (NOVA VENDA) */
+.pdv-container {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+}
+
+.pdv-formulario {
+    flex: 1;
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 4px;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+}
+
+.pdv-bloco {
+    margin-bottom: 15px;
+    border-bottom: 1px solid #f1f5f9;
+    padding-bottom: 15px;
+}
+
+.pdv-bloco:last-child {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border-bottom: none;
+}
+
+.pdv-bloco h3 {
+    color: #475569;
+    font-size: 12px;
+    text-transform: uppercase;
+    margin: 0 0 10px 0;
+}
+
+.pdv-recibo {
+    width: 280px;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 4px;
+    padding: 20px;
+}
+
+.pdv-recibo h3 {
+    margin: 0 0 15px 0;
+    font-size: 14px;
+    color: #0f172a;
+    border-bottom: 1px solid #cbd5e1;
+    padding-bottom: 8px;
+}
+
+.recibo-linhas {
+    font-size: 12px;
+    color: #334155;
+    line-height: 2;
+}
+
+.recibo-linha {
+    display: flex;
+    justify-content: space-between;
+}
+
+.recibo-linha strong {
+    color: #0f172a;
+}
+
+.recibo-divisor {
+    border: 0;
+    border-top: 1px dashed #cbd5e1;
+    margin: 10px 0;
+}
+
+.recibo-total {
+    display: flex;
+    justify-content: space-between;
+    font-size: 16px;
+    margin-top: 20px;
+    color: #047857;
+    font-weight: bold;
+}
+
+.badge {
+    font-size: 9px;
+    padding: 2px 4px;
+    border-radius: 3px;
+    color: #ffffff;
+    background-color: #94a3b8;
+}
+
+.badge.sucesso {
+    background-color: #10b981;
+}
+
+.badge.erro {
+    background-color: #ef4444;
+}

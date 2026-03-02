@@ -685,3 +685,138 @@ body {
     background: #f87171;
     color: white;
 }
+
+/* ==========================================
+   12. LAYOUT SPA (VERSÃO 2.0 - SIDEBAR CORPORATIVA)
+   ========================================== */
+
+body.modo-spa {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    height: 100vh;
+    overflow: hidden;
+    background-color: #f3f4f6;
+    font-size: 13px;
+    /* Redução global do tamanho da fonte */
+}
+
+.sidebar {
+    width: 220px;
+    /* Menu ligeiramente mais estreito */
+    background-color: #ffffff;
+    border-right: 1px solid #e5e7eb;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.02);
+    z-index: 10;
+}
+
+.sidebar-topo {
+    padding: 15px;
+    border-bottom: 1px solid #e5e7eb;
+    text-align: center;
+}
+
+.sidebar-topo img {
+    height: 30px;
+    /* Logo menor */
+}
+
+.sidebar-menu {
+    flex: 1;
+    padding: 15px 10px;
+    overflow-y: auto;
+}
+
+.menu-item {
+    display: flex;
+    align-items: center;
+    padding: 8px 12px;
+    /* Espaçamento mais compacto */
+    color: #4b5563;
+    text-decoration: none;
+    border-radius: 4px;
+    /* Bordas menos arredondadas */
+    margin-bottom: 2px;
+    font-weight: 500;
+    font-size: 13px;
+    /* Fonte reduzida no menu */
+    transition: 0.2s;
+    cursor: pointer;
+}
+
+.menu-item:hover {
+    background-color: #f3f4f6;
+    color: #111827;
+}
+
+.menu-item.ativo {
+    background-color: #eff6ff;
+    color: #2563eb;
+    border-left: 3px solid #2563eb;
+    /* Linha de destaque na esquerda, padrão corporativo */
+    border-right: none;
+}
+
+.sidebar-rodape {
+    padding: 15px;
+    border-top: 1px solid #e5e7eb;
+}
+
+.area-principal {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.topbar {
+    height: 45px;
+    /* Topbar mais fina */
+    background-color: #ffffff;
+    border-bottom: 1px solid #e5e7eb;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    font-size: 12px;
+    /* Fonte reduzida no cabeçalho */
+}
+
+.conteudo-dinamico {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+}
+
+.conteudo-dinamico h2 {
+    font-size: 18px;
+    /* Títulos menores nas seções */
+    margin-top: 0;
+    margin-bottom: 15px;
+    color: #111827;
+}
+
+.secao-tela {
+    display: none;
+}
+
+.secao-tela.ativa {
+    display: block;
+    animation: fadeIn 0.2s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(5px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
