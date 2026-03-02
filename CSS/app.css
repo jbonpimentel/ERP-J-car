@@ -532,3 +532,230 @@ body.modo-spa {
     color: #0f172a;
     font-size: 14px;
 }
+
+/* =========================================
+   LOGIN - CONFIGURAÇÕES GERAIS
+   Removemos as margens padrão e escolhemos uma fonte limpa.
+   ========================================= */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* O container principal usa Flexbox para dividir a tela ao meio */
+.container-login {
+    display: flex;
+    min-height: 100vh;
+    /* Ocupa 100% da altura da tela */
+}
+
+/* =========================================
+   LOGIN - LADO ESQUERDO: O FORMULÁRIO (Área de Ação)
+   ========================================= */
+.lado-formulario {
+    flex: 0 0 400px;
+    /* Largura fixa de 400px para o formulário no computador */
+    background-color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    /* Centraliza o conteúdo verticalmente */
+    padding: 40px;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+    /* Sombra leve para separar da imagem */
+    z-index: 10;
+}
+
+/* Estilização da Logo, Títulos e Textos */
+.logo {
+    max-width: 150px;
+    margin-bottom: 30px;
+    align-self: center;
+    /* Centraliza a logo */
+}
+
+.lado-formulario h2 {
+    color: #1a1a1a;
+    font-size: 24px;
+    margin-bottom: 8px;
+}
+
+.lado-formulario p.subtitulo {
+    color: #666;
+    font-size: 14px;
+    margin-bottom: 30px;
+}
+
+/* Estilização dos Campos de Entrada (Inputs) */
+.grupo-input {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.grupo-input label {
+    font-size: 13px;
+    color: #333;
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.grupo-input input {
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 14px;
+    transition: border-color 0.3s;
+}
+
+.grupo-input input:focus {
+    outline: none;
+    border-color: #2b6cb0;
+    /* Azul profissional ao clicar no campo */
+}
+
+/* Estilização do Botão */
+.btn-entrar {
+    background-color: #2b6cb0;
+    /* Azul corporativo */
+    color: white;
+    border: none;
+    padding: 14px;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background-color 0.3s;
+    width: 100%;
+    /* Garante que o botão ocupe toda a largura disponível */
+}
+
+.btn-entrar:hover {
+    background-color: #1e4e8c;
+    /* Azul mais escuro ao passar o mouse */
+}
+
+/* Link de criar conta */
+.link-conta {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 13px;
+    color: #666;
+}
+
+.link-conta a {
+    color: #2b6cb0;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+/* =========================================
+   LOGIN - LADO DIREITO: PAINEL CORPORATIVO
+   Substitui a imagem por um painel de informações
+   ========================================= */
+.lado-corporativo {
+    flex: 1;
+    /* Um gradiente azul escuro elegante */
+    background: linear-gradient(135deg, #1e4e8c 0%, #0d284a 100%);
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    /* Centraliza verticalmente */
+    justify-content: center;
+    /* Centraliza horizontalmente */
+    padding: 40px;
+}
+
+/* Container do texto e dos recursos limitando a largura para ficar bonito */
+.conteudo-info {
+    max-width: 500px;
+}
+
+.conteudo-info h1 {
+    font-size: 36px;
+    margin-bottom: 15px;
+    font-weight: 700;
+}
+
+.conteudo-info p {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #cbd5e1;
+    /* Um azul/cinza bem clarinho */
+    margin-bottom: 40px;
+}
+
+/* Estilização da lista de benefícios */
+.lista-recursos {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    /* Espaço entre cada item */
+}
+
+.item-recurso {
+    display: flex;
+    align-items: flex-start;
+    gap: 15px;
+    /* Espaço entre o ícone e os textos */
+    background: rgba(255, 255, 255, 0.05);
+    /* Fundo levemente transparente */
+    padding: 20px;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.item-recurso:hover {
+    transform: translateY(-5px);
+    /* Efeito de pular levemente ao passar o mouse */
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.item-recurso .icone {
+    font-size: 24px;
+}
+
+.item-recurso strong {
+    display: block;
+    font-size: 16px;
+    margin-bottom: 5px;
+    color: #ffffff;
+}
+
+.item-recurso span {
+    font-size: 14px;
+    color: #94a3b8;
+}
+
+/* Responsividade: Esconde esse painel também no celular */
+@media (max-width: 768px) {
+    .lado-corporativo {
+        display: none;
+    }
+}
+
+/* =========================================
+   LOGIN - RESPONSIVIDADE (Para Celulares)
+   Se a tela for menor que 768px, muda o layout
+   ========================================= */
+@media (max-width: 768px) {
+    .container-login {
+        flex-direction: column;
+        /* Coloca os elementos em coluna */
+    }
+
+    .lado-formulario {
+        flex: 1;
+        /* Ocupa a tela toda */
+        width: 100%;
+    }
+
+    .lado-imagem {
+        display: none;
+        /* Esconde a imagem no celular para focar no formulário */
+    }
+}
