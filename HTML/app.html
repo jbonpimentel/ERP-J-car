@@ -153,6 +153,98 @@
 
             <section id="sec-estoque" class="secao-tela">
                 <h2 class="titulo-secao">Gestão de Estoque</h2>
+
+                <div class="toolbar-rnx">
+                    <div class="toolbar-acoes">
+                        <button class="btn-icon" id="btnAbrirModalCarro" title="Adicionar">
+                            <span class="material-symbols-outlined">add</span>
+                        </button>
+                        <button class="btn-icon" id="btnEditarCarro" title="Editar">
+                            <span class="material-symbols-outlined">edit</span>
+                        </button>
+                        <button class="btn-icon" title="Visualizar">
+                            <span class="material-symbols-outlined">visibility</span>
+                        </button>
+                        <button class="btn-icon" id="btnExcluirCarro" title="Excluir">
+                            <span class="material-symbols-outlined">delete</span>
+                        </button>
+                        <button class="btn-icon" id="btnRecarregarCarro" title="Recarregar">
+                            <span class="material-symbols-outlined">refresh</span>
+                        </button>
+                        <button class="btn-icon" title="Filtros Avançados">
+                            <span class="material-symbols-outlined">filter_list</span>
+                        </button>
+                    </div>
+                    <div class="toolbar-busca">
+                        <input type="text" id="buscaCarro" class="input-busca"
+                            placeholder="Pesquisar veículo por marca, modelo ou ano...">
+                    </div>
+                </div>
+
+                <div class="tabela-container">
+                    <table class="tabela-rnx">
+                        <thead>
+                            <tr>
+                                <th class="col-checkbox"><input type="checkbox"></th>
+                                <th style="width: 60px;">ID ↕</th>
+                                <th>Marca/Modelo ↕</th>
+                                <th>Ano ↕</th>
+                                <th>Cor ↕</th>
+                                <th>Preço (R$) ↕</th>
+                                <th style="text-align: center;">Status ↕</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabelaCarrosBody">
+                        </tbody>
+                    </table>
+                </div>
+
+                <div id="modalCarro" class="modal-fundo">
+                    <div class="modal-box">
+                        <div class="modal-header">
+                            <h3>Ficha do Veículo</h3>
+                            <button id="btnFecharModalCarro" class="btn-fechar-modal">✖</button>
+                        </div>
+
+                        <div class="grid-form">
+                            <div class="campo">
+                                <label>Marca</label>
+                                <input type="text" id="cadMarca" class="input-padrao" placeholder="Ex: Toyota">
+                            </div>
+                            <div class="campo">
+                                <label>Modelo</label>
+                                <input type="text" id="cadModelo" class="input-padrao" placeholder="Ex: Corolla XEI">
+                            </div>
+                            <div class="campo">
+                                <label>Ano</label>
+                                <input type="number" id="cadAno" class="input-padrao" placeholder="Ex: 2022">
+                            </div>
+                            <div class="campo">
+                                <label>Preço de Venda</label>
+                                <input type="number" id="cadPreco" class="input-padrao" placeholder="Ex: 145000">
+                            </div>
+                            <div class="campo">
+                                <label>Cor</label>
+                                <input type="text" id="cadCor" class="input-padrao" placeholder="Ex: Prata">
+                            </div>
+                            <div class="campo">
+                                <label>Categoria</label>
+                                <select id="cadCategoria" class="input-padrao">
+                                    <option value="Hatch">Hatch</option>
+                                    <option value="Sedan">Sedan</option>
+                                    <option value="SUV">SUV</option>
+                                    <option value="Picape">Picape</option>
+                                    <option value="Esportivo">Esportivo</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button id="btnCancelarModalCarro" class="btn-secundario">Cancelar</button>
+                            <button id="btnSalvarCarro" class="btn-primario">Salvar Veículo</button>
+                        </div>
+                    </div>
+                </div>
             </section>
 
             <section id="sec-clientes" class="secao-tela">
@@ -235,6 +327,7 @@
         </div>
     </main>
 
+    <script src="../js/produtos.js"></script>
     <script src="../js/clientes.js"></script>
     <script src="../js/vendas.js"></script>
     <script src="../js/app.js"></script>

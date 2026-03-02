@@ -1,54 +1,122 @@
 // ==========================================
-// 1. VARIÁVEIS E MEMÓRIA
+// 1. MAPEANDO OS ELEMENTOS DA TELA
 // ==========================================
-const modal = document.getElementById('modalCadastro');
-const btnAbrir = document.getElementById('btnAbrirModal');
-const btnFechar = document.getElementById('btnFecharModal');
-const form = document.getElementById('formCadastrarCarro');
+const modalCarro = document.getElementById('modalCarro');
+const btnAbrirModalCarro = document.getElementById('btnAbrirModalCarro');
+const btnFecharModalCarro = document.getElementById('btnFecharModalCarro');
+const btnCancelarModalCarro = document.getElementById('btnCancelarModalCarro');
+const btnSalvarCarro = document.getElementById('btnSalvarCarro');
+const inputBuscaCarro = document.getElementById('buscaCarro');
+const corpoTabelaCarros = document.getElementById('tabelaCarrosBody');
+
+// Botões da Toolbar
+const btnEditarCarroToolbar = document.getElementById('btnEditarCarro');
+const btnExcluirCarroToolbar = document.getElementById('btnExcluirCarro');
+const btnRecarregarCarroToolbar = document.getElementById('btnRecarregarCarro');
 
 let idCarroSendoEditado = null;
+let todosOsCarros = [];
 
 // ==========================================
-// 2. EVENTOS DE ABRIR E FECHAR O MODAL
+// 2. BUSCA EM TEMPO REAL (Barra Superior)
 // ==========================================
-btnAbrir.onclick = () => {
-    idCarroSendoEditado = null;
-    form.reset();
-    modal.style.display = "flex";
-};
+inputBuscaCarro.addEventListener('input', (evento) => {
+    const termo = evento.target.value.toLowerCase();
 
-btnFechar.onclick = () => {
-    modal.style.display = "none";
-};
+    const filtrados = todosOsCarros.filter(carro => {
+        const marcaBate = carro.marca.toLowerCase().includes(termo);
+        const modeloBate = carro.modelo.toLowerCase().includes(termo);
+        const anoBate = carro.ano.toString().includes(termo);
+        return marcaBate || modeloBate || anoBate;
+    });
 
-// 👉 NOVO: Lógica do botão "Cancelar" (Cinza)
-document.getElementById('btnCancelarCarro').addEventListener('click', () => {
-    modal.style.display = 'none';
+    renderizarTabelaCarros(filtrados);
 });
 
 // ==========================================
-// 3. FUNÇÃO PARA PREPARAR A EDIÇÃO (Botão Amarelo)
+// 3. ABRIR E FECHAR O MODAL
 // ==========================================
-function prepararEdicao(id, marca, modelo, ano, preco, cor, categoria) {
-    idCarroSendoEditado = id;
-
-    document.getElementById('cadMarca').value = marca;
-    document.getElementById('cadModelo').value = modelo;
-    document.getElementById('cadAno').value = ano;
-    document.getElementById('cadPreco').value = preco;
-    document.getElementById('cadCor').value = cor;
-    document.getElementById('cadCategoria').value = categoria || 'SUV'; // Adicionado para carregar categoria
-
-    modal.style.display = "flex";
+function limparFormularioCarro() {
+    idCarroSendoEditado = null;
+    document.getElementById('cadMarca').value = '';
+    document.getElementById('cadModelo').value = '';
+    document.getElementById('cadAno').value = '';
+    document.getElementById('cadPreco').value = '';
+    document.getElementById('cadCor').value = '';
+    document.getElementById('cadCategoria').value = 'SUV';
 }
 
-// ==========================================
-// 4. FUNÇÃO SALVAR (Cria ou Atualiza)
-// ==========================================
-form.addEventListener('submit', async (evento) => {
-    evento.preventDefault();
+btnAbrirModalCarro.addEventListener('click', () => {
+    limparFormularioCarro();
+    modalCarro.style.display = "flex";
+});
 
-    // Adicionado "categoria" ao pacote que vai pro banco
+btnFecharModalCarro.addEventListener('click', () => modalCarro.style.display = "none");
+btnCancelarModalCarro.addEventListener('click', () => modalCarro.style.display = "none");
+
+// ==========================================
+// 4. LÓGICA DA TOOLBAR (EDITAR E EXCLUIR)
+// ==========================================
+function obterIdCarroSelecionado() {
+    const checkbox = document.querySelector('.check-carro:checked');
+    if (!checkbox) {
+        alert("⚠️ Por favor, selecione um veículo na tabela primeiro!");
+        return null;
+    }
+    return checkbox.value;
+}
+
+btnEditarCarroToolbar.addEventListener('click', () => {
+    const id = obterIdCarroSelecionado();
+    if (!id) return;
+
+    const carro = todosOsCarros.find(c => c.id == id);
+    if (carro) {
+        if (carro.status === 'Vendido') {
+            alert("🔒 Edição bloqueada. Este veículo já foi faturado.");
+            return;
+        }
+
+        idCarroSendoEditado = carro.id;
+        document.getElementById('cadMarca').value = carro.marca;
+        document.getElementById('cadModelo').value = carro.modelo;
+        document.getElementById('cadAno').value = carro.ano;
+        document.getElementById('cadPreco').value = carro.preco;
+        document.getElementById('cadCor').value = carro.cor;
+        document.getElementById('cadCategoria').value = carro.categoria || 'SUV';
+
+        modalCarro.style.display = "flex";
+    }
+});
+
+btnExcluirCarroToolbar.addEventListener('click', async () => {
+    const id = obterIdCarroSelecionado();
+    if (!id) return;
+
+    if (confirm("Tem certeza que deseja excluir este veículo do estoque?")) {
+        try {
+            const resposta = await fetch(`http://localhost:3000/carros/${id}`, { method: 'DELETE' });
+            if (resposta.ok) {
+                alert('🗑️ Veículo excluído!');
+                carregarCarros();
+            } else {
+                alert('❌ Erro ao excluir veículo.');
+            }
+        } catch (erro) {
+            console.error('Erro:', erro);
+        }
+    }
+});
+
+btnRecarregarCarroToolbar.addEventListener('click', () => {
+    inputBuscaCarro.value = '';
+    carregarCarros();
+});
+
+// ==========================================
+// 5. SALVAR NO BANCO (POST ou PUT)
+// ==========================================
+btnSalvarCarro.addEventListener('click', async () => {
     const pacoteCarro = {
         marca: document.getElementById('cadMarca').value,
         modelo: document.getElementById('cadModelo').value,
@@ -58,9 +126,13 @@ form.addEventListener('submit', async (evento) => {
         cor: document.getElementById('cadCor').value
     };
 
+    if (!pacoteCarro.marca || !pacoteCarro.modelo || !pacoteCarro.preco) {
+        alert("⚠️ Marca, Modelo e Preço são obrigatórios.");
+        return;
+    }
+
     try {
         let resposta;
-
         if (idCarroSendoEditado !== null) {
             resposta = await fetch(`http://localhost:3000/carros/${idCarroSendoEditado}`, {
                 method: 'PUT',
@@ -76,153 +148,59 @@ form.addEventListener('submit', async (evento) => {
         }
 
         if (resposta.ok) {
-            alert('🎉 Operação realizada com sucesso!');
-            modal.style.display = "none";
-            form.reset();
-            idCarroSendoEditado = null;
+            modalCarro.style.display = "none";
+            limparFormularioCarro();
             carregarCarros();
-            // BUG CORRIGIDO: Removido o appendChild fantasma que quebrava o script aqui.
         } else {
-            alert('❌ Ops! Ocorreu um erro.');
+            alert('❌ Erro ao salvar.');
         }
-
     } catch (erro) {
-        console.error('Erro de conexão:', erro);
-        alert('❌ Erro de comunicação com o servidor.');
+        console.error('Erro:', erro);
     }
 });
 
 // ==========================================
-// 5. FUNÇÃO PARA BUSCAR E MOSTRAR CARROS
+// 6. CARREGAR E RENDERIZAR TABELA
 // ==========================================
 async function carregarCarros() {
     try {
         const resposta = await fetch('http://localhost:3000/carros');
-        const carrosDoBanco = await resposta.json();
-
-        const corpoTabela = document.getElementById('corpoTabelaCarros');
-        corpoTabela.innerHTML = '';
-
-        carrosDoBanco.forEach(carro => {
-            const linha = document.createElement('tr');
-
-            const precoFormatado = Number(carro.preco).toLocaleString('pt-BR', { minimumFractionDigits: 2 });
-
-            // 🚨 NOVO: VERIFICA O STATUS E CRIA A ETIQUETA VISUAL
-            const statusVisual = carro.status === 'Vendido'
-                ? '<span class="badge erro" style="font-size: 11px; padding: 5px 8px; display: inline-block;">VENDIDO</span>'
-                : '<span class="badge sucesso" style="font-size: 11px; padding: 5px 8px; display: inline-block;">DISPONÍVEL</span>';
-
-            // 🚨 NOVO: Se estiver vendido, bloqueia o botão de editar para ninguém mexer no preço de um carro que já foi faturado
-            const btnEditar = carro.status === 'Vendido'
-                ? `<button disabled style="background:#9ca3af; color:white; border:none; padding:5px 10px; border-radius:5px; cursor:not-allowed;">Bloqueado</button>`
-                : `<button onclick="prepararEdicao(${carro.id}, '${carro.marca}', '${carro.modelo}', ${carro.ano}, ${carro.preco}, '${carro.cor}', '${carro.categoria}')" style="background:#f59e0b; color:white; border:none; padding:5px 10px; border-radius:5px; cursor:pointer;">Editar</button>`;
-
-            // ATUALIZADO: Adicionada a coluna extra (td) para o Status e substituído o botão Editar padrão pela variável 'btnEditar'
-            linha.innerHTML = `
-                <td class="col-img">
-                    <img class="Imagem" src="../fotos/logo.png" style="opacity: 0.3;">
-                </td>
-                <td class="carro" style="font-weight: bold;">${carro.marca}</td>
-                <td>${carro.modelo}</td>
-                <td>${carro.ano}</td>
-                <td>${carro.categoria || 'Premium'}</td>
-                <td class="valor">${precoFormatado}</td>
-                <td>${carro.cor || '-'}</td>
-                
-                <td style="text-align: center;">${statusVisual}</td>
-                
-                <td style="text-align: center;">${btnEditar}</td>
-                
-                <td style="text-align: center;">
-                    <button onclick="deletarCarro(${carro.id})" style="background:#ef4444; color:white; border:none; padding:5px 10px; border-radius:5px; cursor:pointer;">Excluir</button>
-                </td>
-            `;
-
-            corpoTabela.appendChild(linha);
-        });
-
-        // Aplica os filtros assim que carrega
-        aplicarFiltros();
-
+        todosOsCarros = await resposta.json();
+        renderizarTabelaCarros(todosOsCarros);
     } catch (erro) {
-        console.error('Erro ao carregar os carros:', erro);
+        console.error('Erro ao carregar carros:', erro);
     }
 }
 
-// ==========================================
-// 6. FUNÇÃO PARA EXCLUIR UM CARRO
-// ==========================================
-async function deletarCarro(id) {
-    const confirmacao = confirm("Tem certeza que deseja excluir este veículo do estoque?");
+function renderizarTabelaCarros(lista) {
+    corpoTabelaCarros.innerHTML = '';
 
-    if (confirmacao) {
-        try {
-            const resposta = await fetch(`http://localhost:3000/carros/${id}`, {
-                method: 'DELETE'
-            });
-
-            if (resposta.ok) {
-                alert('🗑️ Veículo excluído com sucesso!');
-                carregarCarros();
-            } else {
-                alert('❌ Erro ao excluir o veículo.');
-            }
-
-        } catch (erro) {
-            console.error('Erro de conexão:', erro);
-            alert('❌ Erro de comunicação com o servidor.');
-        }
+    if (lista.length === 0) {
+        corpoTabelaCarros.innerHTML = `<tr><td colspan="7" style="text-align: center; padding: 20px;">Nenhum veículo encontrado.</td></tr>`;
+        return;
     }
-}
 
-window.onload = carregarCarros;
+    lista.forEach(carro => {
+        const linha = document.createElement('tr');
+        const precoFormatado = Number(carro.preco).toLocaleString('pt-BR', { minimumFractionDigits: 2 });
 
-// ==========================================
-// LÓGICA DE FILTROS (Consolidada)
-// ==========================================
-// BUG CORRIGIDO: Removido o bloco "inputBusca.addEventListener" avulso que brigava com esta função.
+        // Etiqueta visual do status (idêntica ao seu código antigo, mas menor para caber na tabela densa)
+        const statusVisual = carro.status === 'Vendido'
+            ? '<span class="badge erro" style="background-color: #ef4444;">VENDIDO</span>'
+            : '<span class="badge sucesso" style="background-color: #10b981;">DISPONÍVEL</span>';
 
-function aplicarFiltros() {
-    const termoBusca = document.getElementById('inputBusca')?.value.toLowerCase() || "";
-    const termoModelo = document.getElementById('filtroModelo')?.value.toLowerCase() || "";
-    const termoAno = document.getElementById('filtroAno')?.value || "";
-    const faixaPreco = document.getElementById('filtroPreco')?.value || "todos";
-    const carroceriaSel = document.getElementById('filtroCarroceria')?.value || "todos";
+        linha.innerHTML = `
+            <td class="col-checkbox"><input type="checkbox" class="check-carro" value="${carro.id}"></td>
+            <td>${carro.id}</td>
+            <td style="font-weight: 500;">${carro.marca} ${carro.modelo}</td>
+            <td>${carro.ano}</td>
+            <td>${carro.cor || '-'}</td>
+            <td>R$ ${precoFormatado}</td>
+            <td style="text-align: center;">${statusVisual}</td>
+        `;
 
-    const linhas = document.querySelectorAll('#corpoTabelaCarros tr');
-
-    linhas.forEach(linha => {
-        const marca = linha.cells[1]?.textContent.toLowerCase() || "";
-        const modelo = linha.cells[2]?.textContent.toLowerCase() || "";
-        const anoTab = linha.cells[3]?.textContent.trim() || "";
-        const catTab = linha.cells[4]?.textContent.trim() || "";
-
-        let precoTexto = linha.cells[5]?.textContent || "0";
-        precoTexto = precoTexto.replace('R$', '').replace(/\./g, '').replace(',', '.').trim();
-        const precoNum = parseFloat(precoTexto);
-
-        const bateBusca = marca.includes(termoBusca) || modelo.includes(termoBusca);
-        const bateModelo = modelo.includes(termoModelo);
-        const bateAno = termoAno === "" || anoTab.includes(termoAno);
-        const bateCat = carroceriaSel === "todos" || catTab === carroceriaSel;
-
-        let batePreco = true;
-        if (faixaPreco === "300000") batePreco = precoNum <= 300000;
-        else if (faixaPreco === "600000") batePreco = precoNum > 300000 && precoNum <= 600000;
-        else if (faixaPreco === "acima") batePreco = precoNum > 600000;
-
-        if (bateBusca && bateModelo && bateAno && batePreco && bateCat) {
-            linha.style.display = "";
-        } else {
-            linha.style.display = "none";
-        }
+        corpoTabelaCarros.appendChild(linha);
     });
 }
 
-// Escutadores unificados e organizados
-document.getElementById('inputBusca')?.addEventListener('input', aplicarFiltros);
-document.getElementById('filtroModelo')?.addEventListener('input', aplicarFiltros);
-document.getElementById('filtroAno')?.addEventListener('input', aplicarFiltros);
-document.getElementById('filtroPreco')?.addEventListener('change', aplicarFiltros);
-document.getElementById('filtroCarroceria')?.addEventListener('change', aplicarFiltros);
+carregarCarros();
