@@ -55,8 +55,10 @@ btnFecharModalCarro.addEventListener('click', () => modalCarro.style.display = "
 btnCancelarModalCarro.addEventListener('click', () => modalCarro.style.display = "none");
 
 // ==========================================
-// 4. LÓGICA DA TOOLBAR (EDITAR E EXCLUIR)
+// 4. LÓGICA DA TOOLBAR (ADICIONAR, EDITAR, VISUALIZAR, EXCLUIR)
 // ==========================================
+
+// Função auxiliar para identificar qual veículo está marcado na tabela
 function obterIdCarroSelecionado() {
     const checkbox = document.querySelector('.check-carro:checked');
     if (!checkbox) {
@@ -66,14 +68,16 @@ function obterIdCarroSelecionado() {
     return checkbox.value;
 }
 
+// --- AÇÃO: EDITAR ---
 btnEditarCarroToolbar.addEventListener('click', () => {
     const id = obterIdCarroSelecionado();
     if (!id) return;
 
     const carro = todosOsCarros.find(c => c.id == id);
     if (carro) {
+        // Bloqueia edição de carros já vendidos para manter integridade
         if (carro.status === 'Vendido') {
-            alert("🔒 Edição bloqueada. Este veículo já foi faturado.");
+            alert("🔒 Edição bloqueada. Este veículo já foi faturado e não pode ser alterado.");
             return;
         }
 
@@ -89,28 +93,61 @@ btnEditarCarroToolbar.addEventListener('click', () => {
     }
 });
 
+// --- AÇÃO: VISUALIZAR (MODAL DE DETALHES) ---
+const btnVisualizarCarroToolbar = document.querySelector('#sec-estoque button[title="Visualizar"]');
+if (btnVisualizarCarroToolbar) {
+    btnVisualizarCarroToolbar.addEventListener('click', () => {
+        const id = obterIdCarroSelecionado();
+        if (!id) return;
+
+        const carro = todosOsCarros.find(c => c.id == id);
+        if (carro) {
+            // Prepara os dados para a função global de visualização
+            const dadosParaVisualizar = {
+                modelo: `${carro.marca} ${carro.modelo}`,
+                placa: carro.placa || "Sem Placa (0km)", // Já preparando para futuros campos
+                ano: carro.ano,
+                cor: carro.cor || "Não informada",
+                km: carro.km || "0 km",
+                preco: Number(carro.preco).toLocaleString('pt-BR', { minimumFractionDigits: 2 })
+            };
+
+            abrirVisualizacao('estoque', dadosParaVisualizar);
+        }
+    });
+}
+
+// --- AÇÃO: EXCLUIR ---
 btnExcluirCarroToolbar.addEventListener('click', async () => {
     const id = obterIdCarroSelecionado();
     if (!id) return;
 
-    if (confirm("Tem certeza que deseja excluir este veículo do estoque?")) {
+    if (confirm("⚠️ Tem certeza que deseja excluir este veículo? Essa ação é irreversível.")) {
         try {
             const resposta = await fetch(`http://localhost:3000/carros/${id}`, { method: 'DELETE' });
             if (resposta.ok) {
-                alert('🗑️ Veículo excluído!');
-                carregarCarros();
+                alert('🗑️ Veículo removido do sistema com sucesso!');
+                carregarCarros(); // Atualiza a tabela sem F5
             } else {
-                alert('❌ Erro ao excluir veículo.');
+                alert('❌ Erro ao excluir veículo no servidor.');
             }
         } catch (erro) {
-            console.error('Erro:', erro);
+            console.error('Erro ao deletar:', erro);
         }
     }
 });
 
+// --- AÇÃO: RECARREGAR (REFRESH) ---
 btnRecarregarCarroToolbar.addEventListener('click', () => {
-    inputBuscaCarro.value = '';
+    // Feedback visual de carregamento
+    const icone = btnRecarregarCarroToolbar.querySelector('.material-symbols-outlined');
+    icone.style.transition = "transform 0.5s ease";
+    icone.style.transform = "rotate(360deg)";
+
+    inputBuscaCarro.value = ''; // Limpa a barra de busca
     carregarCarros();
+
+    setTimeout(() => { icone.style.transform = "rotate(0deg)"; }, 500);
 });
 
 // ==========================================
