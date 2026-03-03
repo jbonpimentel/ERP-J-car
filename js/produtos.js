@@ -152,6 +152,56 @@
     });
 
     // ==========================================
+    // 4.5. LÓGICA DE FILTROS AVANÇADOS (ESTOQUE)
+    // ==========================================
+    const btnAbrirFiltrosEstoque = document.getElementById('btnAbrirFiltrosEstoque');
+    const painelFiltrosEstoque = document.getElementById('painelFiltrosEstoque');
+    const btnAplicarFiltroEstoque = document.getElementById('btnAplicarFiltroEstoque');
+
+    if (btnAbrirFiltrosEstoque && painelFiltrosEstoque && btnAplicarFiltroEstoque) {
+
+        // 1. Mostrar/Esconder o painel
+        btnAbrirFiltrosEstoque.addEventListener('click', () => {
+            if (painelFiltrosEstoque.style.display === 'none' || painelFiltrosEstoque.style.display === '') {
+                painelFiltrosEstoque.style.display = 'flex';
+            } else {
+                painelFiltrosEstoque.style.display = 'none';
+            }
+        });
+
+        // 2. Aplicar os filtros na lista em memória
+        btnAplicarFiltroEstoque.addEventListener('click', () => {
+            const statusFiltro = document.getElementById('filtroEstoqueStatus').value;
+            const categoriaFiltro = document.getElementById('filtroEstoqueCategoria').value;
+
+            const carrosFiltrados = todosOsCarros.filter(carro => {
+                let statusValido = true;
+                let categoriaValida = true;
+
+                // Se o usuário selecionou um status, compara. Senão, ignora (true)
+                if (statusFiltro !== "") {
+                    statusValido = carro.status === statusFiltro;
+                }
+
+                // Se o usuário selecionou uma categoria, compara.
+                if (categoriaFiltro !== "") {
+                    // Considerando 'SUV' como default caso a categoria não exista no banco
+                    const categoriaDoCarro = carro.categoria || "SUV";
+                    categoriaValida = categoriaDoCarro === categoriaFiltro;
+                }
+
+                // Só retorna o carro se ele passar em AMBOS os filtros
+                return statusValido && categoriaValida;
+            });
+
+            // Re-renderiza a tabela só com os carros que passaram no filtro
+            renderizarTabelaCarros(carrosFiltrados);
+
+            // Opcional: fechar o painel após aplicar
+            // painelFiltrosEstoque.style.display = 'none';
+        });
+    }
+    // ==========================================
     // 5. SALVAR NO BANCO
     // ==========================================
     btnSalvarCarro.addEventListener('click', async () => {

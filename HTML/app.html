@@ -195,6 +195,35 @@
             <section id="sec-estoque" class="secao-tela">
                 <h2 class="titulo-secao">Gestão de Estoque</h2>
 
+                <div id="painelFiltrosEstoque" class="toolbar-rnx"
+                    style="display: none; background: #f1f5f9; flex-direction: column; padding: 15px; gap: 10px; margin-bottom: 15px;">
+                    <div class="grid-form">
+                        <div class="campo">
+                            <label>Status do Veículo</label>
+                            <select id="filtroEstoqueStatus" class="input-padrao">
+                                <option value="">Todos os Status</option>
+                                <option value="Disponível">Apenas Disponíveis</option>
+                                <option value="Vendido">Apenas Vendidos</option>
+                            </select>
+                        </div>
+                        <div class="campo">
+                            <label>Categoria</label>
+                            <select id="filtroEstoqueCategoria" class="input-padrao">
+                                <option value="">Todas as Categorias</option>
+                                <option value="Hatch">Hatch</option>
+                                <option value="Sedan">Sedan</option>
+                                <option value="SUV">SUV</option>
+                                <option value="Picape">Picape</option>
+                                <option value="Esportivo">Esportivo</option>
+                            </select>
+                        </div>
+                        <div class="campo" style="display: flex; align-items: flex-end;">
+                            <button class="btn-primario" id="btnAplicarFiltroEstoque" style="width: 100%;">Aplicar
+                                Filtros</button>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="toolbar-rnx">
                     <div class="toolbar-acoes">
                         <button class="btn-icon" id="btnAbrirModalCarro" title="Adicionar">
@@ -203,16 +232,16 @@
                         <button class="btn-icon" id="btnEditarCarro" title="Editar">
                             <span class="material-symbols-outlined">edit</span>
                         </button>
-                        <!-- <button class="btn-icon" title="Visualizar">
+                        <button class="btn-icon" title="Visualizar">
                             <span class="material-symbols-outlined">visibility</span>
-                        </button> -->
+                        </button>
                         <button class="btn-icon" id="btnExcluirCarro" title="Excluir">
                             <span class="material-symbols-outlined">delete</span>
                         </button>
                         <button class="btn-icon" id="btnRecarregarCarro" title="Recarregar">
                             <span class="material-symbols-outlined">refresh</span>
                         </button>
-                        <button class="btn-icon" title="Filtros Avançados">
+                        <button class="btn-icon" id="btnAbrirFiltrosEstoque" title="Filtros Avançados">
                             <span class="material-symbols-outlined">filter_list</span>
                         </button>
                     </div>
