@@ -43,7 +43,17 @@
         <div class="conteudo-dinamico">
 
             <section id="sec-dashboard" class="secao-tela ativa">
-                <h2 class="titulo-secao">Dashboard Financeiro</h2>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                    <h2 class="titulo-secao" style="margin: 0;">Dashboard Financeiro</h2>
+                    <div class="toolbar-acoes" style="border: none; padding: 0;">
+                        <button class="btn-icon" id="btnImprimirDash" title="Imprimir Dashboard">
+                            <span class="material-symbols-outlined">print</span>
+                        </button>
+                        <button class="btn-icon" onclick="location.reload()" title="Atualizar Dados">
+                            <span class="material-symbols-outlined">refresh</span>
+                        </button>
+                    </div>
+                </div>
 
                 <div class="dash-cards-container">
                     <div class="dash-card border-blue">
@@ -358,8 +368,29 @@
             <section id="sec-historico" class="secao-tela">
                 <h2 class="titulo-secao">Histórico de Vendas</h2>
 
+                <div id="painelFiltrosHistorico" class="toolbar-rnx"
+                    style="display: none; background: #f1f5f9; flex-direction: column; padding: 15px; gap: 10px; margin-bottom: 15px;">
+                    <div class="grid-form">
+                        <div class="campo">
+                            <label>Período (Mês/Ano)</label>
+                            <input type="month" id="filtroHistoricoMes" class="input-padrao">
+                        </div>
+                        <div class="campo">
+                            <label>Valor Mínimo da Venda (R$)</label>
+                            <input type="number" id="filtroHistoricoValor" class="input-padrao" placeholder="Ex: 50000">
+                        </div>
+                        <div class="campo" style="display: flex; align-items: flex-end;">
+                            <button class="btn-primario" id="btnAplicarFiltroHistorico" style="width: 100%;">Filtrar
+                                Histórico</button>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="toolbar-rnx">
                     <div class="toolbar-acoes">
+                        <button class="btn-icon" id="btnImprimirHistorico" title="Gerar Relatório de Vendas">
+                            <span class="material-symbols-outlined">print</span>
+                        </button>
                         <button class="btn-icon" title="Visualizar Detalhes">
                             <span class="material-symbols-outlined">visibility</span>
                         </button>
@@ -369,7 +400,7 @@
                         <button class="btn-icon" id="btnRecarregarHistorico" title="Recarregar">
                             <span class="material-symbols-outlined">refresh</span>
                         </button>
-                        <button class="btn-icon" title="Filtros Avançados">
+                        <button class="btn-icon" id="btnAbrirFiltrosHistorico" title="Filtros Avançados">
                             <span class="material-symbols-outlined">filter_list</span>
                         </button>
                     </div>
@@ -409,8 +440,30 @@
                     </div>
                 </div>
 
+                <div id="painelFiltrosRelatorio" class="toolbar-rnx"
+                    style="display: none; background: #f1f5f9; flex-direction: column; padding: 15px; gap: 10px; margin-bottom: 15px;">
+                    <div class="grid-form">
+                        <div class="campo">
+                            <label>Mês de Referência</label>
+                            <input type="month" id="filtroRelatorioMes" class="input-padrao">
+                        </div>
+                        <div class="campo">
+                            <label>Valor Mínimo Veículo (R$)</label>
+                            <input type="number" id="filtroRelatorioPreco" class="input-padrao"
+                                placeholder="Ex: 300000">
+                        </div>
+                        <div class="campo" style="display: flex; align-items: flex-end;">
+                            <button class="btn-primario" id="btnAplicarFiltroRelatorio" style="width: 100%;">Filtrar
+                                Dados</button>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="toolbar-rnx">
                     <div class="toolbar-acoes">
+                        <button class="btn-icon" id="btnImprimirPDF" title="Gerar Relatório PDF">
+                            <span class="material-symbols-outlined">print</span>
+                        </button>
                         <button class="btn-icon" id="btnPagarComissaoToolbar"
                             title="Baixar Comissão (Marcar como Paga)">
                             <span class="material-symbols-outlined">payments</span>
@@ -418,7 +471,7 @@
                         <button class="btn-icon" id="btnRecarregarComissoes" title="Recarregar">
                             <span class="material-symbols-outlined">refresh</span>
                         </button>
-                        <button class="btn-icon" title="Filtros Avançados">
+                        <button class="btn-icon" id="btnAbrirFiltrosRelatorio" title="Filtros Avançados">
                             <span class="material-symbols-outlined">filter_list</span>
                         </button>
                     </div>

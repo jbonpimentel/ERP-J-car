@@ -157,3 +157,39 @@ function renderizarTabelaHistorico(lista) {
 
 // Inicia
 carregarVendidos();
+
+// 1. Abrir/Fechar painel de filtros do Histórico
+document.getElementById('btnAbrirFiltrosHistorico').addEventListener('click', () => {
+    const painel = document.getElementById('painelFiltrosHistorico');
+    painel.style.display = painel.style.display === 'none' ? 'flex' : 'none';
+});
+
+// 2. Ação de Impressão do Histórico
+document.getElementById('btnImprimirHistorico').addEventListener('click', () => {
+    const mes = document.getElementById('filtroHistoricoMes').value || "Geral";
+    const tituloOriginal = document.title;
+    document.title = `Relatorio_Vendas_JCAR_${mes}`;
+
+    window.print();
+
+    document.title = tituloOriginal;
+});
+
+// 3. Lógica para Aplicar o Filtro (Enviando para o Backend)
+document.getElementById('btnAplicarFiltroHistorico').addEventListener('click', async () => {
+    const mes = document.getElementById('filtroHistoricoMes').value;
+    const valorMin = document.getElementById('filtroHistoricoValor').value;
+
+    try {
+        // Faz a requisição filtrada ao seu server.ts
+        const res = await fetch(`http://localhost:3000/vendas?mes=${mes}&valorMin=${valorMin}`);
+        const dados = await res.json();
+
+        // Chame a sua função que já existe para popular a tabela de histórico
+        // Exemplo: renderizarTabelaHistorico(dados);
+
+        alert("Histórico filtrado com sucesso!");
+    } catch (err) {
+        console.error("Erro ao filtrar histórico:", err);
+    }
+});

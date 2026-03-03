@@ -94,3 +94,13 @@ async function carregarDashboard() {
 
 // Inicia automaticamente quando a página (SPA) termina de carregar
 carregarDashboard();
+
+// Lógica para o botão de impressão do Dashboard
+document.getElementById('btnImprimirDash').addEventListener('click', () => {
+    const tituloOriginal = document.title;
+    document.title = "Relatorio_Dashboard_Financeiro_JCAR";
+
+    window.print(); // Dispara a impressão (PDF)
+
+    document.title = tituloOriginal;
+});

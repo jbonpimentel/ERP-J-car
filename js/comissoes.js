@@ -193,3 +193,43 @@ function renderizarTabelaComissoes(lista) {
 
 // Inicia
 carregarComissoes();
+
+// 1. Abrir/Fechar painel de filtros
+document.getElementById('btnAbrirFiltrosRelatorio').addEventListener('click', () => {
+    const painel = document.getElementById('painelFiltrosRelatorio');
+    painel.style.display = painel.style.display === 'none' ? 'flex' : 'none';
+});
+
+// 2. Ação de Impressão (Gera o PDF do navegador)
+document.getElementById('btnImprimirPDF').addEventListener('click', () => {
+    const mes = document.getElementById('filtroRelatorioMes').value || "Geral";
+    const preco = document.getElementById('filtroRelatorioPreco').value || "0";
+
+    // Altera o título da página temporariamente para o nome do arquivo PDF sair correto
+    const tituloOriginal = document.title;
+    document.title = `Relatorio_Comissoes_JCAR_${mes}_Acima_R$${preco}`;
+
+    window.print();
+
+    document.title = tituloOriginal;
+});
+
+// 3. Lógica de Filtro (Conexão com o Backend)
+document.getElementById('btnAplicarFiltroRelatorio').addEventListener('click', async () => {
+    const mes = document.getElementById('filtroRelatorioMes').value;
+    const precoMin = document.getElementById('filtroRelatorioPreco').value;
+
+    try {
+        // Envia os filtros para o seu servidor TypeScript
+        const url = `http://localhost:3000/comissoes?mes=${mes}&minPreco=${precoMin}`;
+        const res = await fetch(url);
+        const dados = await res.json();
+
+        // Chame aqui a sua função que já preenche a tabela
+        // Exemplo: atualizarTabelaComissoes(dados);
+
+        console.log("Dados filtrados carregados com sucesso!");
+    } catch (err) {
+        console.error("Erro ao aplicar filtros:", err);
+    }
+});

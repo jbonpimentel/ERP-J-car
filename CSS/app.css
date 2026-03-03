@@ -788,3 +788,31 @@ body.modo-spa {
 .card-valor {
     font-size: 20px;
 }
+
+@media print {
+
+    /* Esconde elementos de navegação e interface que não devem ser impressos */
+    .sidebar,
+    .topbar,
+    .toolbar-rnx,
+    #painelFiltrosRelatorio,
+    .sidebar-rodape {
+        display: none !important;
+    }
+
+    /* Expande a área de conteúdo para ocupar toda a folha */
+    .area-principal,
+    .conteudo-dinamico {
+        margin: 0 !important;
+        padding: 0 !important;
+        width: 100% !important;
+        height: auto !important;
+        overflow: visible !important;
+    }
+
+    /* Garante que o navegador imprima as cores dos cards (backgrounds) */
+    body {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+}
