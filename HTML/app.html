@@ -41,48 +41,56 @@
         </header>
 
         <div class="conteudo-dinamico">
-
             <section id="sec-dashboard" class="secao-tela ativa">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
-                    <h2 class="titulo-secao" style="margin: 0;">Dashboard Financeiro</h2>
-                    <div class="toolbar-acoes" style="border: none; padding: 0;">
-                        <button class="btn-icon" id="btnImprimirDash" title="Imprimir Dashboard">
-                            <span class="material-symbols-outlined">print</span>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                    <h2 class="titulo-secao" style="margin: 0;">Dashboard Executivo</h2>
+                    <div class="toolbar-rnx" style="margin: 0; border: none; background: transparent; padding: 0;">
+                        <button class="btn-icon" id="btnImprimirDash" title="Exportar Relatório PDF">
+                            <span class="material-symbols-outlined">picture_as_pdf</span>
                         </button>
-                        <button class="btn-icon" onclick="location.reload()" title="Atualizar Dados">
-                            <span class="material-symbols-outlined">refresh</span>
+                        <button class="btn-icon" id="btnRecarregarDash" title="Sincronizar Dados">
+                            <span class="material-symbols-outlined">sync</span>
                         </button>
                     </div>
                 </div>
 
                 <div class="dash-cards-container">
                     <div class="dash-card border-blue">
-                        <h3 class="dash-card-titulo">Faturamento Total</h3>
-                        <div class="dash-card-valor" id="dashFaturamento">A carregar...</div>
+                        <h3 class="dash-card-titulo">Faturamento Bruto</h3>
+                        <div class="dash-card-valor" id="dashFaturamento">R$ 0,00</div>
                     </div>
                     <div class="dash-card border-green">
-                        <h3 class="dash-card-titulo">Veículos no Estoque</h3>
-                        <div class="dash-card-valor" id="dashEstoque">A carregar...</div>
+                        <h3 class="dash-card-titulo">Ticket Médio</h3>
+                        <div class="dash-card-valor" id="dashTicketMedio">R$ 0,00</div>
                     </div>
                     <div class="dash-card border-yellow">
-                        <h3 class="dash-card-titulo">Clientes Ativos</h3>
-                        <div class="dash-card-valor" id="dashClientes">A carregar...</div>
+                        <h3 class="dash-card-titulo">Veículos em Estoque</h3>
+                        <div class="dash-card-valor" id="dashEstoque">0</div>
                     </div>
                     <div class="dash-card border-purple">
-                        <h3 class="dash-card-titulo">Vendas Realizadas</h3>
-                        <div class="dash-card-valor" id="dashQtdVendas">A carregar...</div>
+                        <h3 class="dash-card-titulo">Total de Vendas</h3>
+                        <div class="dash-card-valor" id="dashQtdVendas">0</div>
                     </div>
                 </div>
 
-                <div class="dash-graficos-container">
-                    <div class="dash-box-grafico flex-2">
-                        <h3 class="dash-titulo-grafico">Evolução de Faturamento (Últimas Vendas)</h3>
-                        <canvas id="graficoFaturamento" height="100"></canvas>
-                    </div>
-
-                    <div class="dash-box-grafico flex-1">
-                        <h3 class="dash-titulo-grafico">Estoque por Marca</h3>
-                        <canvas id="graficoEstoque" height="200"></canvas>
+                <div class="card-painel">
+                    <div class="dash-grid-graficos">
+                        <div class="dash-box-grafico">
+                            <h3 class="dash-titulo-grafico">Volume de Vendas Mensal</h3>
+                            <canvas id="graficoFaturamento"></canvas>
+                        </div>
+                        <div class="dash-box-grafico">
+                            <h3 class="dash-titulo-grafico">Vendas por Categoria</h3>
+                            <canvas id="graficoCategorias"></canvas>
+                        </div>
+                        <div class="dash-box-grafico">
+                            <h3 class="dash-titulo-grafico">Performance por Vendedor</h3>
+                            <canvas id="graficoVendedores"></canvas>
+                        </div>
+                        <div class="dash-box-grafico">
+                            <h3 class="dash-titulo-grafico">Distribuição de Marcas (Estoque)</h3>
+                            <canvas id="graficoEstoque"></canvas>
+                        </div>
                     </div>
                 </div>
             </section>

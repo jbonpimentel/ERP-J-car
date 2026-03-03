@@ -1,143 +1,143 @@
-// ==========================================
-// 1. CARREGAR DADOS GERAIS DO DASHBOARD
-// ==========================================
-async function carregarDashboard() {
-    try {
-        // Dispara as 3 requisições ao mesmo tempo para ser muito mais rápido!
-        const [resVendas, resCarros, resClientes] = await Promise.all([
-            fetch('http://localhost:3000/vendas'),
-            fetch('http://localhost:3000/carros'), // Só traz carros disponíveis (regra que ajustámos)
-            fetch('http://localhost:3000/clientes')
-        ]);
+// js/dashboard.js
+(() => {
+    let graficosInstanciados = {};
 
-        const vendas = await resVendas.json();
-        const carros = await resCarros.json();
-        const clientes = await resClientes.json();
+    async function carregarDashboard() {
+        try {
+            const [resVendas, resCarros, resClientes] = await Promise.all([
+                fetch('http://localhost:3000/vendas'),
+                fetch('http://localhost:3000/carros'),
+                fetch('http://localhost:3000/clientes')
+            ]);
 
-        // ==========================================
-        // 2. PREENCHER OS CARDS (KPIs)
-        // ==========================================
-        const faturamentoTotal = vendas.reduce((acumulador, venda) => acumulador + Number(venda.valor_total), 0);
+            const vendas = await resVendas.json();
+            const carros = await resCarros.json();
+            const clientes = await resClientes.json();
 
-        document.getElementById('dashFaturamento').textContent = faturamentoTotal.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-        document.getElementById('dashEstoque').textContent = carros.length;
-        document.getElementById('dashClientes').textContent = clientes.length;
-        document.getElementById('dashQtdVendas').textContent = vendas.length;
+            // 1. Cálculos de KPIs
+            const faturamentoTotal = vendas.reduce((acc, v) => acc + Number(v.valor_total), 0);
+            const ticketMedio = vendas.length > 0 ? faturamentoTotal / vendas.length : 0;
 
-        // ==========================================
-        // 3. RENDERIZAR GRÁFICO 1: FATURAMENTO (LINHA)
-        // ==========================================
-        // Vamos pegar as últimas 7 vendas para mostrar no gráfico (e inverter para a ordem cronológica correta)
-        const ultimasVendas = vendas.slice(0, 7).reverse();
+            document.getElementById('dashFaturamento').textContent = faturamentoTotal.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+            document.getElementById('dashTicketMedio').textContent = ticketMedio.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+            document.getElementById('dashEstoque').textContent = carros.length;
+            document.getElementById('dashQtdVendas').textContent = vendas.length;
 
-        const labelsVendas = ultimasVendas.map(v => new Date(v.data_venda).toLocaleDateString('pt-BR'));
-        const dadosVendas = ultimasVendas.map(v => Number(v.valor_total));
+            // 2. Preparação de Dados para Gráficos
+            renderizarGraficoVendas(vendas);
+            renderizarGraficoCategorias(vendas);
+            renderizarGraficoVendedores(vendas);
+            renderizarGraficoEstoque(carros);
 
-        const ctxFaturamento = document.getElementById('graficoFaturamento').getContext('2d');
-        new Chart(ctxFaturamento, {
+        } catch (erro) {
+            console.error("Erro ao carregar Dashboard:", erro);
+        }
+    }
+
+    function criarOuAtualizarGrafico(id, config) {
+        if (graficosInstanciados[id]) {
+            graficosInstanciados[id].destroy();
+        }
+        const ctx = document.getElementById(id).getContext('2d');
+        graficosInstanciados[id] = new Chart(ctx, config);
+    }
+
+    // Gráfico 1: Linha - Evolução Mensal
+    function renderizarGraficoVendas(vendas) {
+        const ultimas = vendas.slice(-10);
+        const labels = ultimas.map(v => new Date(v.data_venda).toLocaleDateString('pt-BR'));
+        const dados = ultimas.map(v => v.valor_total);
+
+        criarOuAtualizarGrafico('graficoFaturamento', {
             type: 'line',
             data: {
-                labels: labelsVendas, // Datas em baixo
+                labels,
                 datasets: [{
-                    label: 'Valor da Venda (R$)',
-                    data: dadosVendas, // Valores
-                    borderColor: '#2563eb', // Azul
-                    backgroundColor: 'rgba(37, 99, 235, 0.1)', // Azul transparente
-                    borderWidth: 2,
+                    label: 'Vendas',
+                    data: dados,
+                    borderColor: '#2563eb',
+                    backgroundColor: 'rgba(37, 99, 235, 0.05)',
                     fill: true,
-                    tension: 0.3 // Deixa a linha curvada e elegante
+                    tension: 0.4
                 }]
             },
-            options: {
-                responsive: true,
-                plugins: { legend: { display: false } }, // Esconde a legenda para ficar mais limpo
-                scales: {
-                    y: { beginAtZero: true }
-                }
-            }
+            options: { plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true } } }
+        });
+    }
+
+    // Gráfico 2: Doughnut - Vendas por Categoria
+    function renderizarGraficoCategorias(vendas) {
+        const categorias = {};
+        vendas.forEach(v => {
+            const cat = v.categoria || 'SUV'; // SUV como fallback
+            categorias[cat] = (categorias[cat] || 0) + 1;
         });
 
-        // ==========================================
-        // 4. RENDERIZAR GRÁFICO 2: ESTOQUE POR MARCA (ROSCA)
-        // ==========================================
-        // Contar quantos carros existem de cada marca
-        const contagemMarcas = {};
-        carros.forEach(carro => {
-            const marca = carro.marca.toUpperCase();
-            contagemMarcas[marca] = (contagemMarcas[marca] || 0) + 1;
-        });
-
-        const ctxEstoque = document.getElementById('graficoEstoque').getContext('2d');
-        new Chart(ctxEstoque, {
+        criarOuAtualizarGrafico('graficoCategorias', {
             type: 'doughnut',
             data: {
-                labels: Object.keys(contagemMarcas), // Ex: TOYOTA, HONDA, BMW
+                labels: Object.keys(categorias),
                 datasets: [{
-                    data: Object.values(contagemMarcas), // Ex: 5, 3, 1
-                    backgroundColor: ['#2563eb', '#10b981', '#f59e0b', '#8b5cf6', '#ef4444', '#06b6d4'],
-                    borderWidth: 0
+                    data: Object.values(categorias),
+                    backgroundColor: ['#3b82f6', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6']
                 }]
             },
-            options: {
-                responsive: true,
-                cutout: '70%', // Espessura da rosca
-                plugins: {
-                    legend: { position: 'bottom' }
-                }
-            }
+            options: { cutout: '65%', plugins: { legend: { position: 'bottom' } } }
+        });
+    }
+
+    // Gráfico 3: Bar - Ranking de Vendedores
+    function renderizarGraficoVendedores(vendas) {
+        const vendedores = {};
+        vendas.forEach(v => {
+            const nome = v.vendedor_nome || 'Vendedor';
+            vendedores[nome] = (vendedores[nome] || 0) + Number(v.valor_total);
         });
 
-    } catch (erro) {
-        console.error("Erro ao desenhar o Dashboard:", erro);
+        criarOuAtualizarGrafico('graficoVendedores', {
+            type: 'bar',
+            data: {
+                labels: Object.keys(vendedores),
+                datasets: [{
+                    label: 'Total Faturado',
+                    data: Object.values(vendedores),
+                    backgroundColor: '#6366f1'
+                }]
+            },
+            options: { indexAxis: 'y', plugins: { legend: { display: false } } }
+        });
     }
-}
 
-// Inicia automaticamente quando a página (SPA) termina de carregar
-carregarDashboard();
+    // Gráfico 4: Polar Area - Saúde do Estoque por Marca
+    function renderizarGraficoEstoque(carros) {
+        const marcas = {};
+        carros.forEach(c => {
+            marcas[c.marca] = (marcas[c.marca] || 0) + 1;
+        });
 
-// Lógica para o botão de impressão do Dashboard
-document.getElementById('btnImprimirDash').addEventListener('click', () => {
-    const tituloOriginal = document.title;
-    document.title = "Relatorio_Dashboard_Financeiro_JCAR";
+        criarOuAtualizarGrafico('graficoEstoque', {
+            type: 'polarArea',
+            data: {
+                labels: Object.keys(marcas),
+                datasets: [{
+                    data: Object.values(marcas),
+                    backgroundColor: ['#94a3b8', '#334155', '#475569', '#1e293b']
+                }]
+            },
+            options: { plugins: { legend: { position: 'bottom' } } }
+        });
+    }
 
-    window.print(); // Dispara a impressão (PDF)
-
-    document.title = tituloOriginal;
-});
-
-// ==========================================
-// 5. VIDA À TOOLBAR DO DASHBOARD
-// ==========================================
-
-// O botão de imprimir já está configurado, mas vamos garantir que ele limpe o título
-document.getElementById('btnImprimirDash').addEventListener('click', () => {
-    const tituloOriginal = document.title;
-    document.title = "Relatorio_Dashboard_JCAR_" + new Date().toLocaleDateString().replace(/\//g, '-');
-    window.print();
-    document.title = tituloOriginal;
-});
-
-// NOVO: Selecionar o botão de recarregar da Toolbar do Dashboard
-// No seu HTML ele está como: onclick="location.reload()"
-// Vamos substituir essa lógica por uma atualização inteligente sem F5!
-const btnUpdateDash = document.querySelector('#sec-dashboard [title="Atualizar Dados"]');
-
-if (btnUpdateDash) {
-    // Removemos o atributo antigo do HTML via JS para não haver conflito
-    btnUpdateDash.removeAttribute('onclick');
-
-    btnUpdateDash.addEventListener('click', () => {
-        console.log("🔄 Atualizando dados do Dashboard...");
-
-        // Adiciona um efeito visual de girar no ícone (opcional, mas profissional)
-        const icone = btnUpdateDash.querySelector('.material-symbols-outlined');
-        icone.style.transition = "transform 0.5s ease";
-        icone.style.transform = "rotate(360deg)";
-
-        // Chama a função que já criamos para buscar os dados no servidor novamente!
+    // Eventos da Toolbar
+    document.getElementById('btnRecarregarDash').addEventListener('click', () => {
+        const icone = document.querySelector('#btnRecarregarDash span');
+        icone.style.transform = 'rotate(360deg)';
+        setTimeout(() => icone.style.transform = 'rotate(0deg)', 500);
         carregarDashboard();
-
-        // Reseta o ícone após a animação
-        setTimeout(() => { icone.style.transform = "rotate(0deg)"; }, 500);
     });
-}
+
+    document.getElementById('btnImprimirDash').addEventListener('click', () => window.print());
+
+    // Inicialização
+    carregarDashboard();
+})();
