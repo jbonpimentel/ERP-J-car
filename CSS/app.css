@@ -816,3 +816,34 @@ body.modo-spa {
         print-color-adjust: exact;
     }
 }
+
+/* ==========================================
+   NOVO PADRÃO CORPORATIVO: CARDS E MODAIS
+   ========================================== */
+
+/* Card Branco para assentar as Tabelas e Toolbars */
+.card-painel {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    margin-bottom: 20px;
+}
+
+/* Ajusta a toolbar para não ter margem extra quando estiver dentro do Card */
+.card-painel .toolbar-rnx {
+    margin-top: 0;
+    margin-bottom: 15px !important;
+    background-color: #f8fafc;
+    /* Leve destaque dentro do card branco */
+    border: 1px solid #e2e8f0;
+    box-shadow: none;
+    /* Remove a sombra duplicada */
+}
+
+/* Remove a sombra da tabela, pois o Card já tem a sombra principal */
+.card-painel .tabela-container {
+    box-shadow: none;
+    border: 1px solid #e2e8f0;
+}

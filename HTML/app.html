@@ -195,78 +195,89 @@
             <section id="sec-estoque" class="secao-tela">
                 <h2 class="titulo-secao">Gestão de Estoque</h2>
 
-                <div id="painelFiltrosEstoque" class="toolbar-rnx"
-                    style="display: none; background: #f1f5f9; flex-direction: column; padding: 15px; gap: 10px; margin-bottom: 15px;">
-                    <div class="grid-form">
-                        <div class="campo">
-                            <label>Status do Veículo</label>
-                            <select id="filtroEstoqueStatus" class="input-padrao">
-                                <option value="">Todos os Status</option>
-                                <option value="Disponível">Apenas Disponíveis</option>
-                                <option value="Vendido">Apenas Vendidos</option>
-                            </select>
+                <div id="painelFiltrosEstoque" class="modal-fundo" style="display: none;">
+                    <div class="modal-box" style="width: 400px;">
+                        <div class="modal-header">
+                            <h3>Filtros Avançados: Estoque</h3>
+                            <button type="button" class="btn-fechar-modal"
+                                onclick="document.getElementById('painelFiltrosEstoque').style.display='none'">✖</button>
                         </div>
-                        <div class="campo">
-                            <label>Categoria</label>
-                            <select id="filtroEstoqueCategoria" class="input-padrao">
-                                <option value="">Todas as Categorias</option>
-                                <option value="Hatch">Hatch</option>
-                                <option value="Sedan">Sedan</option>
-                                <option value="SUV">SUV</option>
-                                <option value="Picape">Picape</option>
-                                <option value="Esportivo">Esportivo</option>
-                            </select>
+                        <div class="grid-form" style="grid-template-columns: 1fr;">
+                            <div class="campo">
+                                <label>Status do Veículo</label>
+                                <select id="filtroEstoqueStatus" class="input-padrao">
+                                    <option value="">Todos os Status</option>
+                                    <option value="Disponível">Apenas Disponíveis</option>
+                                    <option value="Vendido">Apenas Vendidos</option>
+                                </select>
+                            </div>
+                            <div class="campo">
+                                <label>Categoria</label>
+                                <select id="filtroEstoqueCategoria" class="input-padrao">
+                                    <option value="">Todas as Categorias</option>
+                                    <option value="Hatch">Hatch</option>
+                                    <option value="Sedan">Sedan</option>
+                                    <option value="SUV">SUV</option>
+                                    <option value="Picape">Picape</option>
+                                    <option value="Esportivo">Esportivo</option>
+                                </select>
+                            </div>
                         </div>
-                        <div class="campo" style="display: flex; align-items: flex-end;">
-                            <button class="btn-primario" id="btnAplicarFiltroEstoque" style="width: 100%;">Aplicar
+                        <div class="modal-footer">
+                            <button type="button" class="btn-secundario"
+                                onclick="document.getElementById('painelFiltrosEstoque').style.display='none'">Cancelar</button>
+                            <button class="btn-primario" id="btnAplicarFiltroEstoque"
+                                onclick="document.getElementById('painelFiltrosEstoque').style.display='none'">Aplicar
                                 Filtros</button>
                         </div>
                     </div>
                 </div>
 
-                <div class="toolbar-rnx">
-                    <div class="toolbar-acoes">
-                        <button class="btn-icon" id="btnAbrirModalCarro" title="Adicionar">
-                            <span class="material-symbols-outlined">add</span>
-                        </button>
-                        <button class="btn-icon" id="btnEditarCarro" title="Editar">
-                            <span class="material-symbols-outlined">edit</span>
-                        </button>
-                        <button class="btn-icon" title="Visualizar">
-                            <span class="material-symbols-outlined">visibility</span>
-                        </button>
-                        <button class="btn-icon" id="btnExcluirCarro" title="Excluir">
-                            <span class="material-symbols-outlined">delete</span>
-                        </button>
-                        <button class="btn-icon" id="btnRecarregarCarro" title="Recarregar">
-                            <span class="material-symbols-outlined">refresh</span>
-                        </button>
-                        <button class="btn-icon" id="btnAbrirFiltrosEstoque" title="Filtros Avançados">
-                            <span class="material-symbols-outlined">filter_list</span>
-                        </button>
+                <div class="card-painel">
+                    <div class="toolbar-rnx">
+                        <div class="toolbar-acoes">
+                            <button class="btn-icon" id="btnAbrirModalCarro" title="Adicionar Registro">
+                                <span class="material-symbols-outlined">add</span>
+                            </button>
+                            <button class="btn-icon" id="btnEditarCarro" title="Editar Registro">
+                                <span class="material-symbols-outlined">edit</span>
+                            </button>
+                            <button class="btn-icon" title="Visualizar Detalhes">
+                                <span class="material-symbols-outlined">visibility</span>
+                            </button>
+                            <button class="btn-icon" id="btnExcluirCarro" title="Excluir Registro">
+                                <span class="material-symbols-outlined">delete</span>
+                            </button>
+                            <button class="btn-icon" id="btnRecarregarCarro" title="Recarregar Dados">
+                                <span class="material-symbols-outlined">refresh</span>
+                            </button>
+                            <button class="btn-icon" id="btnAbrirFiltrosEstoque" title="Filtros Avançados">
+                                <span class="material-symbols-outlined">filter_list</span>
+                            </button>
+                        </div>
+                        <div class="toolbar-busca">
+                            <input type="text" id="buscaCarro" class="input-busca"
+                                placeholder="Pesquisar veículo por marca, modelo ou ano...">
+                        </div>
                     </div>
-                    <div class="toolbar-busca">
-                        <input type="text" id="buscaCarro" class="input-busca"
-                            placeholder="Pesquisar veículo por marca, modelo ou ano...">
-                    </div>
-                </div>
 
-                <div class="tabela-container">
-                    <table class="tabela-rnx">
-                        <thead>
-                            <tr>
-                                <th class="col-checkbox"><input type="checkbox"></th>
-                                <th style="width: 60px;">ID ↕</th>
-                                <th>Marca/Modelo ↕</th>
-                                <th>Ano ↕</th>
-                                <th>Cor ↕</th>
-                                <th>Preço (R$) ↕</th>
-                                <th style="text-align: center;">Status ↕</th>
-                            </tr>
-                        </thead>
-                        <tbody id="tabelaCarrosBody">
-                        </tbody>
-                    </table>
+                    <div class="tabela-container">
+                        <table class="tabela-rnx">
+                            <thead>
+                                <tr>
+                                    <th class="col-checkbox"><input type="checkbox"></th>
+                                    <th style="width: 60px;">ID ↕</th>
+                                    <th>Marca/Modelo ↕</th>
+                                    <th>Ano ↕</th>
+                                    <th>Cor ↕</th>
+                                    <th>Preço (R$) ↕</th>
+                                    <th style="text-align: center;">Status ↕</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tabelaCarrosBody">
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
 
                 <div id="modalCarro" class="modal-fundo">
@@ -275,27 +286,26 @@
                             <h3>Ficha do Veículo</h3>
                             <button id="btnFecharModalCarro" class="btn-fechar-modal">✖</button>
                         </div>
-
                         <div class="grid-form">
                             <div class="campo">
                                 <label>Marca</label>
-                                <input type="text" id="cadMarca" class="input-padrao" placeholder="Ex: Toyota">
+                                <input type="text" id="cadMarca" class="input-padrao" placeholder="Marca do veículo">
                             </div>
                             <div class="campo">
                                 <label>Modelo</label>
-                                <input type="text" id="cadModelo" class="input-padrao" placeholder="Ex: Corolla XEI">
+                                <input type="text" id="cadModelo" class="input-padrao" placeholder="Modelo do veículo">
                             </div>
                             <div class="campo">
                                 <label>Ano</label>
-                                <input type="number" id="cadAno" class="input-padrao" placeholder="Ex: 2022">
+                                <input type="number" id="cadAno" class="input-padrao" placeholder="Ano de fabricação">
                             </div>
                             <div class="campo">
                                 <label>Preço de Venda</label>
-                                <input type="number" id="cadPreco" class="input-padrao" placeholder="Ex: 145000">
+                                <input type="number" id="cadPreco" class="input-padrao" placeholder="Valor em reais">
                             </div>
                             <div class="campo">
                                 <label>Cor</label>
-                                <input type="text" id="cadCor" class="input-padrao" placeholder="Ex: Prata">
+                                <input type="text" id="cadCor" class="input-padrao" placeholder="Cor predominante">
                             </div>
                             <div class="campo">
                                 <label>Categoria</label>
@@ -308,77 +318,87 @@
                                 </select>
                             </div>
                         </div>
-
                         <div class="modal-footer">
                             <button id="btnCancelarModalCarro" class="btn-secundario">Cancelar</button>
-                            <button id="btnSalvarCarro" class="btn-primario">Salvar Veículo</button>
+                            <button id="btnSalvarCarro" class="btn-primario">Salvar Registro</button>
                         </div>
                     </div>
                 </div>
             </section>
 
             <section id="sec-clientes" class="secao-tela">
-                <h2 class="titulo-secao">Clientes</h2>
+                <h2 class="titulo-secao">Carteira de Clientes</h2>
 
-                <div id="painelFiltrosCliente" class="toolbar-rnx"
-                    style="display: none; background: #f1f5f9; flex-direction: column; padding: 15px; gap: 10px; margin-bottom: 15px;">
-                    <div class="grid-form">
-                        <div class="campo">
-                            <label>Status na Loja</label>
-                            <select id="filtroClienteStatus" class="input-padrao">
-                                <option value="">Todos (Clientes e Prospectos)</option>
-                                <option value="comprador">Já comprou na loja</option>
-                                <option value="prospecto">Prospectos (Ainda não compraram)</option>
-                            </select>
+                <div id="painelFiltrosCliente" class="modal-fundo" style="display: none;">
+                    <div class="modal-box" style="width: 400px;">
+                        <div class="modal-header">
+                            <h3>Filtros Avançados: Clientes</h3>
+                            <button type="button" class="btn-fechar-modal"
+                                onclick="document.getElementById('painelFiltrosCliente').style.display='none'">✖</button>
                         </div>
-                        <div class="campo" style="display: flex; align-items: flex-end;">
-                            <button class="btn-primario" id="btnAplicarFiltroCliente" style="width: 100%;">Aplicar
+                        <div class="grid-form" style="grid-template-columns: 1fr;">
+                            <div class="campo">
+                                <label>Status na Loja</label>
+                                <select id="filtroClienteStatus" class="input-padrao">
+                                    <option value="">Todos (Clientes e Prospectos)</option>
+                                    <option value="comprador">Já comprou na loja</option>
+                                    <option value="prospecto">Prospectos (Ainda não compraram)</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn-secundario"
+                                onclick="document.getElementById('painelFiltrosCliente').style.display='none'">Cancelar</button>
+                            <button class="btn-primario" id="btnAplicarFiltroCliente"
+                                onclick="document.getElementById('painelFiltrosCliente').style.display='none'">Aplicar
                                 Filtros</button>
                         </div>
                     </div>
                 </div>
 
-                <div class="toolbar-rnx">
-                    <div class="toolbar-acoes">
-                        <button class="btn-icon" id="btnAbrirModalCliente" title="Adicionar">
-                            <span class="material-symbols-outlined">add</span>
-                        </button>
-                        <button class="btn-icon" id="btnEditarClienteToolbar" title="Editar">
-                            <span class="material-symbols-outlined">edit</span>
-                        </button>
-                        <button class="btn-icon" id="btnVisualizarCliente" title="Visualizar Detalhes">
-                            <span class="material-symbols-outlined">visibility</span>
-                        </button>
-                        <button class="btn-icon" id="btnExcluirClienteToolbar" title="Excluir">
-                            <span class="material-symbols-outlined">delete</span>
-                        </button>
-                        <button class="btn-icon" id="btnRecarregarClienteToolbar" title="Recarregar">
-                            <span class="material-symbols-outlined">refresh</span>
-                        </button>
-                        <button class="btn-icon" id="btnAbrirFiltrosCliente" title="Filtros Avançados">
-                            <span class="material-symbols-outlined">filter_list</span>
-                        </button>
+                <div class="card-painel">
+                    <div class="toolbar-rnx">
+                        <div class="toolbar-acoes">
+                            <button class="btn-icon" id="btnAbrirModalCliente" title="Adicionar Registro">
+                                <span class="material-symbols-outlined">add</span>
+                            </button>
+                            <button class="btn-icon" id="btnEditarClienteToolbar" title="Editar Registro">
+                                <span class="material-symbols-outlined">edit</span>
+                            </button>
+                            <button class="btn-icon" id="btnVisualizarCliente" title="Visualizar Detalhes">
+                                <span class="material-symbols-outlined">visibility</span>
+                            </button>
+                            <button class="btn-icon" id="btnExcluirClienteToolbar" title="Excluir Registro">
+                                <span class="material-symbols-outlined">delete</span>
+                            </button>
+                            <button class="btn-icon" id="btnRecarregarClienteToolbar" title="Recarregar Dados">
+                                <span class="material-symbols-outlined">refresh</span>
+                            </button>
+                            <button class="btn-icon" id="btnAbrirFiltrosCliente" title="Filtros Avançados">
+                                <span class="material-symbols-outlined">filter_list</span>
+                            </button>
+                        </div>
+                        <div class="toolbar-busca">
+                            <input type="text" id="buscaCliente" class="input-busca"
+                                placeholder="Pesquisar cliente por nome ou CPF/CNPJ...">
+                        </div>
                     </div>
-                    <div class="toolbar-busca">
-                        <input type="text" id="buscaCliente" class="input-busca"
-                            placeholder="Pesquisar cliente por nome ou CPF...">
-                    </div>
-                </div>
 
-                <div class="tabela-container">
-                    <table class="tabela-rnx">
-                        <thead>
-                            <tr>
-                                <th class="col-checkbox"><input type="checkbox"></th>
-                                <th style="width: 60px;">ID ↕</th>
-                                <th>Nome ↕</th>
-                                <th style="width: 150px;">Telefone ↕</th>
-                                <th style="width: 180px;">CPF/CNPJ ↕</th>
-                            </tr>
-                        </thead>
-                        <tbody id="tabelaClientesBody">
-                        </tbody>
-                    </table>
+                    <div class="tabela-container">
+                        <table class="tabela-rnx">
+                            <thead>
+                                <tr>
+                                    <th class="col-checkbox"><input type="checkbox"></th>
+                                    <th style="width: 60px;">ID ↕</th>
+                                    <th>Nome / Razão Social ↕</th>
+                                    <th style="width: 150px;">Telefone ↕</th>
+                                    <th style="width: 180px;">CPF/CNPJ ↕</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tabelaClientesBody">
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
 
                 <div id="modalCliente" class="modal-fundo">
@@ -387,7 +407,6 @@
                             <h3>Ficha do Cliente</h3>
                             <button id="btnFecharModal" class="btn-fechar-modal">✖</button>
                         </div>
-
                         <div class="grid-form">
                             <div class="campo linha-completa">
                                 <label>Nome Completo / Razão Social</label>
@@ -402,68 +421,78 @@
                                 <input type="text" id="cadTelefone" class="input-padrao">
                             </div>
                         </div>
-
                         <div class="modal-footer">
                             <button id="btnCancelarModal" class="btn-secundario">Cancelar</button>
                             <button id="btnSalvarCliente" class="btn-primario">Salvar Registro</button>
                         </div>
                     </div>
                 </div>
-
             </section>
 
             <section id="sec-historico" class="secao-tela">
                 <h2 class="titulo-secao">Histórico de Vendas</h2>
 
-                <div id="painelFiltrosHistorico" class="toolbar-rnx"
-                    style="display: none; background: #f1f5f9; flex-direction: column; padding: 15px; gap: 10px; margin-bottom: 15px;">
-                    <div class="grid-form">
-                        <div class="campo">
-                            <label>Período (Mês/Ano)</label>
-                            <input type="month" id="filtroHistoricoMes" class="input-padrao">
+                <div id="painelFiltrosHistorico" class="modal-fundo" style="display: none;">
+                    <div class="modal-box" style="width: 400px;">
+                        <div class="modal-header">
+                            <h3>Filtros Avançados: Histórico</h3>
+                            <button type="button" class="btn-fechar-modal"
+                                onclick="document.getElementById('painelFiltrosHistorico').style.display='none'">✖</button>
                         </div>
-                        <div class="campo">
-                            <label>Valor Mínimo da Venda (R$)</label>
-                            <input type="number" id="filtroHistoricoValor" class="input-padrao" placeholder="Ex: 50000">
+                        <div class="grid-form" style="grid-template-columns: 1fr;">
+                            <div class="campo">
+                                <label>Período (Mês/Ano)</label>
+                                <input type="month" id="filtroHistoricoMes" class="input-padrao">
+                            </div>
+                            <div class="campo">
+                                <label>Valor Mínimo da Venda (R$)</label>
+                                <input type="number" id="filtroHistoricoValor" class="input-padrao"
+                                    placeholder="Valor base">
+                            </div>
                         </div>
-                        <div class="campo" style="display: flex; align-items: flex-end;">
-                            <button class="btn-primario" id="btnAplicarFiltroHistorico" style="width: 100%;">Filtrar
-                                Histórico</button>
+                        <div class="modal-footer">
+                            <button type="button" class="btn-secundario"
+                                onclick="document.getElementById('painelFiltrosHistorico').style.display='none'">Cancelar</button>
+                            <button class="btn-primario" id="btnAplicarFiltroHistorico"
+                                onclick="document.getElementById('painelFiltrosHistorico').style.display='none'">Aplicar
+                                Filtros</button>
                         </div>
                     </div>
                 </div>
 
-                <div class="toolbar-rnx">
-                    <div class="toolbar-acoes">
-                        <button class="btn-icon" id="btnImprimirHistorico" title="Gerar Relatório de Vendas">
-                            <span class="material-symbols-outlined">print</span>
-                        </button>
-                        <button class="btn-icon" title="Visualizar Detalhes">
-                            <span class="material-symbols-outlined">visibility</span>
-                        </button>
-                        <button class="btn-icon" id="btnEstornarVendaToolbar" title="Estornar Venda (Admin)">
-                            <span class="material-symbols-outlined">delete</span>
-                        </button>
-                        <button class="btn-icon" id="btnRecarregarHistorico" title="Recarregar">
-                            <span class="material-symbols-outlined">refresh</span>
-                        </button>
-                        <button class="btn-icon" id="btnAbrirFiltrosHistorico" title="Filtros Avançados">
-                            <span class="material-symbols-outlined">filter_list</span>
-                        </button>
+                <div class="card-painel">
+                    <div class="toolbar-rnx">
+                        <div class="toolbar-acoes">
+                            <button class="btn-icon" id="btnImprimirHistorico" title="Gerar Relatório de Vendas">
+                                <span class="material-symbols-outlined">print</span>
+                            </button>
+                            <button class="btn-icon" title="Visualizar Detalhes do Contrato">
+                                <span class="material-symbols-outlined">visibility</span>
+                            </button>
+                            <button class="btn-icon" id="btnEstornarVendaToolbar" title="Estornar Venda">
+                                <span class="material-symbols-outlined">delete</span>
+                            </button>
+                            <button class="btn-icon" id="btnRecarregarHistorico" title="Recarregar Dados">
+                                <span class="material-symbols-outlined">refresh</span>
+                            </button>
+                            <button class="btn-icon" id="btnAbrirFiltrosHistorico" title="Filtros Avançados">
+                                <span class="material-symbols-outlined">filter_list</span>
+                            </button>
+                        </div>
+                        <div class="toolbar-busca">
+                            <input type="text" id="buscaHistorico" class="input-busca"
+                                placeholder="Pesquisar venda por cliente ou veículo...">
+                        </div>
                     </div>
-                    <div class="toolbar-busca">
-                        <input type="text" id="buscaHistorico" class="input-busca"
-                            placeholder="Pesquisar venda por cliente ou veículo...">
-                    </div>
-                </div>
 
-                <div class="tabela-container">
-                    <table class="tabela-rnx">
-                        <thead id="cabecalhoTabelaHistorico">
-                        </thead>
-                        <tbody id="tabelaHistoricoBody">
-                        </tbody>
-                    </table>
+                    <div class="tabela-container">
+                        <table class="tabela-rnx">
+                            <thead id="cabecalhoTabelaHistorico">
+                            </thead>
+                            <tbody id="tabelaHistoricoBody">
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </section>
 
@@ -475,143 +504,150 @@
                         <h3>Meta Global (Mês)</h3>
                         <div class="card-valor" id="cardMetaTotal">R$ 0,00</div>
                     </div>
-
                     <div class="card-estatistica">
                         <h3>Faturamento Atual</h3>
                         <div class="card-valor valor-faturamento" id="cardMetaAlcancada">R$ 0,00</div>
                     </div>
-
                     <div class="card-estatistica">
-                        <h3>Comissões a Pagar</h3>
+                        <h3>Comissões Pendentes</h3>
                         <div class="card-valor valor-comissao" id="cardComissoesPendentes">R$ 0,00</div>
                     </div>
                 </div>
 
-                <div id="painelFiltrosRelatorio" class="toolbar-rnx"
-                    style="display: none; background: #f1f5f9; flex-direction: column; padding: 15px; gap: 10px; margin-bottom: 15px;">
-                    <div class="grid-form">
-                        <div class="campo">
-                            <label>Mês de Referência</label>
-                            <input type="month" id="filtroRelatorioMes" class="input-padrao">
+                <div id="painelFiltrosRelatorio" class="modal-fundo" style="display: none;">
+                    <div class="modal-box" style="width: 400px;">
+                        <div class="modal-header">
+                            <h3>Filtros Avançados: Relatórios</h3>
+                            <button type="button" class="btn-fechar-modal"
+                                onclick="document.getElementById('painelFiltrosRelatorio').style.display='none'">✖</button>
                         </div>
-                        <div class="campo">
-                            <label>Valor Mínimo Veículo (R$)</label>
-                            <input type="number" id="filtroRelatorioPreco" class="input-padrao"
-                                placeholder="Ex: 300000">
+                        <div class="grid-form" style="grid-template-columns: 1fr;">
+                            <div class="campo">
+                                <label>Mês de Referência</label>
+                                <input type="month" id="filtroRelatorioMes" class="input-padrao">
+                            </div>
+                            <div class="campo">
+                                <label>Valor Mínimo Faturado (R$)</label>
+                                <input type="number" id="filtroRelatorioPreco" class="input-padrao"
+                                    placeholder="Valor base">
+                            </div>
                         </div>
-                        <div class="campo" style="display: flex; align-items: flex-end;">
-                            <button class="btn-primario" id="btnAplicarFiltroRelatorio" style="width: 100%;">Filtrar
-                                Dados</button>
+                        <div class="modal-footer">
+                            <button type="button" class="btn-secundario"
+                                onclick="document.getElementById('painelFiltrosRelatorio').style.display='none'">Cancelar</button>
+                            <button class="btn-primario" id="btnAplicarFiltroRelatorio"
+                                onclick="document.getElementById('painelFiltrosRelatorio').style.display='none'">Aplicar
+                                Filtros</button>
                         </div>
                     </div>
                 </div>
 
-                <div class="toolbar-rnx">
-                    <div class="toolbar-acoes">
-                        <button class="btn-icon" id="btnImprimirPDF" title="Gerar Relatório PDF">
-                            <span class="material-symbols-outlined">print</span>
-                        </button>
-                        <button class="btn-icon" id="btnPagarComissaoToolbar"
-                            title="Baixar Comissão (Marcar como Paga)">
-                            <span class="material-symbols-outlined">payments</span>
-                        </button>
-                        <button class="btn-icon" id="btnRecarregarComissoes" title="Recarregar">
-                            <span class="material-symbols-outlined">refresh</span>
-                        </button>
-                        <button class="btn-icon" id="btnAbrirFiltrosRelatorio" title="Filtros Avançados">
-                            <span class="material-symbols-outlined">filter_list</span>
-                        </button>
+                <div class="card-painel">
+                    <div class="toolbar-rnx">
+                        <div class="toolbar-acoes">
+                            <button class="btn-icon" id="btnImprimirPDF" title="Gerar Relatório PDF">
+                                <span class="material-symbols-outlined">print</span>
+                            </button>
+                            <button class="btn-icon" id="btnPagarComissaoToolbar"
+                                title="Baixar Comissão (Marcar como Paga)">
+                                <span class="material-symbols-outlined">payments</span>
+                            </button>
+                            <button class="btn-icon" id="btnRecarregarComissoes" title="Recarregar Dados">
+                                <span class="material-symbols-outlined">refresh</span>
+                            </button>
+                            <button class="btn-icon" id="btnAbrirFiltrosRelatorio" title="Filtros Avançados">
+                                <span class="material-symbols-outlined">filter_list</span>
+                            </button>
+                        </div>
+                        <div class="toolbar-busca">
+                            <input type="text" id="buscaComissao" class="input-busca"
+                                placeholder="Pesquisar por vendedor...">
+                        </div>
                     </div>
-                    <div class="toolbar-busca">
-                        <input type="text" id="buscaComissao" class="input-busca"
-                            placeholder="Pesquisar por vendedor ou veículo...">
-                    </div>
-                </div>
 
-                <div class="tabela-container">
-                    <table class="tabela-rnx">
-                        <thead>
-                            <tr>
-                                <th class="col-checkbox"><input type="checkbox" disabled></th>
-                                <th>Data ↕</th>
-                                <th>Vendedor ↕</th>
-                                <th>Veículo ↕</th>
-                                <th>Valor da Venda ↕</th>
-                                <th>Valor Comissão ↕</th>
-                                <th style="text-align: center;">Status ↕</th>
-                            </tr>
-                        </thead>
-                        <tbody id="tabelaComissoesBody">
-                        </tbody>
-                    </table>
+                    <div class="tabela-container">
+                        <table class="tabela-rnx">
+                            <thead>
+                                <tr>
+                                    <th class="col-checkbox"><input type="checkbox" disabled></th>
+                                    <th>Data ↕</th>
+                                    <th>Vendedor ↕</th>
+                                    <th>Veículo ↕</th>
+                                    <th>Valor da Venda ↕</th>
+                                    <th>Valor Comissão ↕</th>
+                                    <th style="text-align: center;">Status ↕</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tabelaComissoesBody">
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </section>
 
             <section id="sec-acessos" class="secao-tela">
-                <h2 class="titulo-secao">Gestão de Acessos (Painel Admin)</h2>
+                <h2 class="titulo-secao">Gestão de Acessos</h2>
 
-                <div class="toolbar-rnx">
-                    <div class="toolbar-acoes">
-                        <button class="btn-icon" id="btnAbrirModalUsuario" title="Novo Vendedor">
-                            <span class="material-symbols-outlined">add</span>
-                        </button>
-                        <button class="btn-icon" id="btnEditarUsuarioToolbar" title="Editar Usuário">
-                            <span class="material-symbols-outlined">edit</span>
-                        </button>
-                        <button class="btn-icon" id="btnExcluirUsuarioToolbar" title="Revogar Acesso (Excluir)">
-                            <span class="material-symbols-outlined">delete</span>
-                        </button>
-                        <button class="btn-icon" id="btnRecarregarUsuarios" title="Recarregar">
-                            <span class="material-symbols-outlined">refresh</span>
-                        </button>
+                <div class="card-painel">
+                    <div class="toolbar-rnx">
+                        <div class="toolbar-acoes">
+                            <button class="btn-icon" id="btnAbrirModalUsuario" title="Novo Acesso">
+                                <span class="material-symbols-outlined">add</span>
+                            </button>
+                            <button class="btn-icon" id="btnEditarUsuarioToolbar" title="Editar Permissões">
+                                <span class="material-symbols-outlined">edit</span>
+                            </button>
+                            <button class="btn-icon" id="btnExcluirUsuarioToolbar" title="Revogar Acesso">
+                                <span class="material-symbols-outlined">delete</span>
+                            </button>
+                            <button class="btn-icon" id="btnRecarregarUsuarios" title="Recarregar Dados">
+                                <span class="material-symbols-outlined">refresh</span>
+                            </button>
+                        </div>
+                        <div class="toolbar-busca">
+                            <input type="text" id="buscaUsuario" class="input-busca"
+                                placeholder="Pesquisar usuário por e-mail...">
+                        </div>
                     </div>
-                    <div class="toolbar-busca">
-                        <input type="text" id="buscaUsuario" class="input-busca"
-                            placeholder="Pesquisar usuário por e-mail...">
+
+                    <div class="tabela-container">
+                        <table class="tabela-rnx">
+                            <thead>
+                                <tr>
+                                    <th class="col-checkbox"><input type="checkbox" disabled></th>
+                                    <th style="width: 60px;">ID ↕</th>
+                                    <th>Nome / E-mail de Acesso ↕</th>
+                                    <th>Data de Criação ↕</th>
+                                    <th style="text-align: center;">Nível de Acesso ↕</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tabelaUsuariosBody">
+                            </tbody>
+                        </table>
                     </div>
                 </div>
 
-                <div class="tabela-container">
-                    <table class="tabela-rnx">
-                        <thead>
-                            <tr>
-                                <th class="col-checkbox"><input type="checkbox" disabled></th>
-                                <th style="width: 60px;">ID ↕</th>
-                                <th>Nome / E-mail de Acesso ↕</th>
-                                <th>Data de Criação ↕</th>
-                                <th style="text-align: center;">Nível de Acesso ↕</th>
-                            </tr>
-                        </thead>
-                        <tbody id="tabelaUsuariosBody">
-                        </tbody>
-                    </table>
-                </div>
-
-                <div id="modalUsuario" class="modal-fundo">
+                <div id="modalUsuario" class="modal-fundo" style="display: none;">
                     <div class="modal-box" style="width: 400px;">
                         <div class="modal-header">
                             <h3 id="tituloModalUsuario">Cadastrar Novo Acesso</h3>
                             <button id="btnFecharModalUsuario" class="btn-fechar-modal">✖</button>
                         </div>
-
                         <div class="grid-form" style="grid-template-columns: 1fr;">
                             <div class="campo">
-                                <label>Nome do Vendedor</label>
-                                <input type="text" id="cadUsuarioNome" class="input-padrao"
-                                    placeholder="Ex: Carlos Silva">
+                                <label>Nome do Colaborador</label>
+                                <input type="text" id="cadUsuarioNome" class="input-padrao">
                             </div>
                             <div class="campo">
-                                <label>E-mail (Login)</label>
-                                <input type="email" id="cadUsuarioEmail" class="input-padrao"
-                                    placeholder="Ex: carlos@jcar.com">
+                                <label>E-mail Corporativo (Login)</label>
+                                <input type="email" id="cadUsuarioEmail" class="input-padrao">
                             </div>
                             <div class="campo">
-                                <label>Senha</label>
+                                <label>Senha de Acesso</label>
                                 <input type="password" id="cadUsuarioSenha" class="input-padrao"
-                                    placeholder="Nova senha (ou vazio para manter atual)">
+                                    placeholder="Nova senha (ou vazio para manter)">
                             </div>
                         </div>
-
                         <div class="modal-footer">
                             <button id="btnCancelarModalUsuario" class="btn-secundario">Cancelar</button>
                             <button id="btnSalvarUsuario" class="btn-primario">Salvar Acesso</button>
