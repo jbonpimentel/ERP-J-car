@@ -1,44 +1,56 @@
-# Porjeto J-car | Sistema Front End ( Hmtl e CSS)
-
-## Visão geral 
-O **J-Car** está sendo desenvolvido para fins de estudo, com foco em compreender na prática o funcionamento do **HTML** e **CSS**. O projeto simula um sistema interno para colaboradores de uma concessionária, auxiliando no controle do processo de venda e pós-venda de veículos.
-
-O projeto entra em uma nova fase com a implementação de **JavaScript**, responsável por dar mais vida ao sistema, tornando-o dinâmico e funcional. Todo o conteúdo exibido nas tabelas passará a ser armazenado e gerenciado através do localStorage, e futuramente nenhum dado de clientes ou produtos ficará diretamente no **HTML**, sendo todos carregados de forma dinâmica.
-
-Essa evolução tem como objetivo aproximar o projeto de um cenário real de mercado, reforçando boas práticas de organização, separação de responsabilidades e manipulação de dados no front-end.
-
----
-
-## Visão do projeto 
-Atualmente, o projeto funciona com **HTML e CSS puros**, simulando um sistema real de:
-- Login
-- Menu de navegação
-- Controle de produtos (estoque de veículos)
-- visualização de clientes
-
-Essa primeira fase teve como objetivo consolidar a base visual e estrutural do sistema, garantindo:
-- Layout consistente entre telas
-- Reaproveitamento de estilos
-- Organização de arquivos
-- Leitura clara do código
-  
----
-
-## Evolução com JavaScript (em andamento)
-
-O projeto está em **processo de evolução** e já está sendo preparado para receber **JavaScript**, que será responsável por tornar o sistema **dinâmico e funcional**.
-
-As próximas implementações incluem:
-
-- Validação real de login
-- Filtros funcionais nas telas de produtos e clientes
-- Manipulação do DOM
-- Cadastro e exclusão de produtos
-- Criar `localStorage` para retirar os dados do html
-  - Persistência de dados utilizando `localStorage`
+# 🚗 J-Car ERP 2.0 | Sistema de Gestão Automotiva (Full-Stack)
 
 <p align="center">
-  <img src="../fotos/logo.png" alt="alt text" width="200">
+  <img src="../fotos/logo.png" alt="Logo J-Car" width="200">
 </p>
 
+## 📖 Visão Geral 
+O **J-Car ERP 2.0** nasceu como um projeto de estudos em front-end e evoluiu para uma aplicação **Full-Stack** robusta. Ele é um sistema interno projetado para concessionárias, gerenciando desde a entrada do veículo no estoque até o comissionamento do vendedor e o relacionamento pós-venda com o cliente.
 
+O sistema foi construído utilizando arquitetura **SPA (Single Page Application)** no front-end e uma API RESTful no back-end, garantindo alta performance, segurança e uma experiência de usuário (UX) fluida e responsiva (Mobile Ready).
+
+---
+
+## 🚀 Funcionalidades Principais
+
+* **📊 Dashboard de BI (Business Intelligence):** Painel executivo com gráficos dinâmicos (Chart.js) mostrando faturamento, ticket médio, performance de vendedores e saúde do estoque em tempo real.
+* **🛒 PDV (Ponto de Venda):** Frente de caixa inteligente que processa a venda, calcula o custo efetivo, dá baixa automática no estoque e atualiza o histórico de compras do cliente.
+* **👥 CRM (Carteira de Clientes):** Gestão completa de clientes com histórico de veículos comprados, controle de prospectos vs. compradores e dados de contato.
+* **🚘 Controle de Estoque:** Módulo de CRUD completo para adicionar, editar e excluir veículos, com filtros por status (Disponível/Vendido) e categorias.
+* **💰 Financeiro e Comissões:** Cálculo automático de comissões (1%) atrelado a metas, com recurso de "Baixa Financeira" exclusivo para administradores.
+* **🔐 Gestão de Acessos:** Controle de permissões baseado em perfil (Admin vs. Vendedor), protegendo rotas sensíveis como estorno de vendas e pagamento de comissões.
+
+---
+
+## 🛠️ Stack Tecnológica
+
+**Front-end:**
+* HTML5 & CSS3 (Design corporativo, Flexbox/Grid, Responsivo)
+* JavaScript (Vanilla JS, Fetch API, Manipulação avançada do DOM)
+* Chart.js (Visualização de dados)
+* Google Material Symbols (Iconografia)
+
+**Back-end:**
+* Node.js (v24)
+* TypeScript (Padrão ESM com `tsx`)
+* Express.js (Roteamento e API REST)
+* CORS (Segurança de requisições cross-origin)
+
+**Banco de Dados:**
+* MySQL (Relacional, consultas complexas com `JOIN` e agregações)
+
+---
+
+## ⚙️ Como rodar o projeto localmente
+
+### 1. Banco de Dados
+Certifique-se de ter o MySQL rodando na sua máquina e crie o banco `jcarDB`. As credenciais padrão no código são `root` e senha configurada no arquivo de conexão.
+
+### 2. Back-end (Servidor)
+Abra o terminal na pasta raiz do projeto e execute:
+```bash
+# Instale as dependências
+npm install
+
+# Inicie o servidor Node com TypeScript
+npx tsx src/server.ts
